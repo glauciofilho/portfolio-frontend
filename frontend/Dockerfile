@@ -1,37 +1,19 @@
-# =========================
-# 1️⃣ Build da aplicação
-# =========================
+# Build
 FROM node:20-alpine AS build
-
 WORKDIR /app
 
-# Copia apenas dependências primeiro (cache eficiente)
-COPY package.json package-lock.json ./
+COPY package*.json ./
+RUN npm install
 
-RUN npm ci
-
-# Copia o restante do projeto
 COPY . .
-
-# Build de produção
 RUN npm run build
 
-# =========================
-# 2️⃣ Servir com Nginx
-# =========================
-FROM nginx:alpine
+# Runtime
+FROM node:20-alpine
+WORKDIR /app
 
-# Remove config padrão
-RUN rm /etc/nginx/conf.d/default.conf
+RUN npm install -g serve
+COPY --from=build /app/dist ./dist
 
-# Copia configuração customizada
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copia build do React
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Expõe porta 80
 EXPOSE 88
-
-# Inicia Nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve", "-s", "dist", "-l", "88"]
