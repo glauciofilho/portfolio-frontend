@@ -6,14 +6,20 @@ export async function getProjects(lang = "en") {
   return res.json();
 }
 
-export async function getoneProjects(numberProject, lang = "en") {
+export async function getOneProject(numberProject, lang = "en") {
   const res = await fetch(`${API_BASE}/api/projects/${numberProject}/?lang=${lang}`);
   if (!res.ok) throw new Error("Error");
   return res.json();
 }
 
-export async function getfile(numberProject, numberFile, lang = "en") {
-  const res = await fetch(`${API_BASE}/api/file/${numberProject}/${numberFile}/?lang=${lang}`);
+export async function getFile(numberProject, numberFile, lang = "en") {
+  const res = await fetch(`${API_BASE}/api/files/${numberProject}/${numberFile}/?lang=${lang}`);
+  if (!res.ok) throw new Error("Error");
+  return res.json();
+}
+
+export async function getAnalytics( lang = "en") {
+  const res = await fetch(`${API_BASE}/api/analytics/?lang=${lang}`);
   if (!res.ok) throw new Error("Error");
   return res.json();
 }

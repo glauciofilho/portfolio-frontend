@@ -114,6 +114,7 @@ export default function Footer() {
               <li><Link to="/">{t.home}</Link></li>
               <li><Link to="/resume">{t.resume}</Link></li>
               <li><Link to="/projects">{t.projects}</Link></li>
+              <li><Link to="/analytics">{t.analytics}</Link></li>
               <li><Link to="/contact">{t.contact}</Link></li>
             </ul>
           </div>

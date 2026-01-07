@@ -4,6 +4,7 @@ export const translations = {
     home: "Início",
     resume: "Currículo",
     projects: "Projetos",
+    analytics: "Análises",
     contact: "Contato",
     experience: "Experiência",
     education: "Educação",
@@ -34,6 +35,10 @@ export const translations = {
     loadingProjects: "Carregando projetos...",
 
     notfind: "Nenhum projeto encontrado",
+
+    // VSCode Viewer
+    vscodeLoading: "Carregando projeto...",
+    vscodeNoFile: "Selecione um arquivo para visualizar seu conteúdo.",
 
     // RESUME
     resumeRole:
@@ -74,6 +79,18 @@ export const translations = {
 
     downloadCV: "Baixar Currículo",
 
+    // Analytics
+    analyticsTitle: "Analytics",
+    analyticsDescription: "Explore insights e visualizações de dados dos meus projetos, mostrando tendências, uso de tecnologias e distribuição geográfica.",
+    loadingAnalytics: "Carregando analytics...",
+    analyticsProjectsOverTime: "Projetos ao Longo do Tempo",
+    analyticsStacksUsage: "Uso de Tecnologias",
+    analyticsProjects: "Projetos",
+    analyticsFiles: "Arquivos",
+    analyticsStacks: "Tecnologias",
+    analyticsCountries: "Países",
+    noData: "Sem dados disponíveis",
+
     // Footer
     footerTitle: "Vamos nos conectar",
     footerCTA: "Fale comigo",
@@ -94,6 +111,7 @@ export const translations = {
     home: "Home",
     resume: "Resume",
     projects: "Projects",
+    analytics: "Analytics",
     contact: "Contact",
     experience: "Experience",
     education: "Education",
@@ -124,6 +142,10 @@ export const translations = {
     loadingProjects: "Loading projects...",
 
     notfind: "No projects found",
+
+    // VSCode Viewer
+    vscodeLoading: "Loading project...",
+    vscodeNoFile: "Select a file to view its content.",
 
     // RESUME
     resumeRole:
@@ -163,6 +185,18 @@ export const translations = {
       "Bachelor’s Degree in Civil Engineering (2023) - Federal University of Goiás",
 
     downloadCV: "Download CV",
+
+    // Analytics
+    analyticsTitle: "Analytics",
+    analyticsDescription: "Explore insights and data visualizations from my projects, showcasing trends, technology usage, and geographic distribution.",
+    loadingAnalytics: "Loading analytics...",
+    analyticsProjectsOverTime: "Projects Over Time",
+    analyticsStacksUsage: "Technology Stack Usage",
+    analyticsProjects: "Projects",
+    analyticsFiles: "Files",
+    analyticsStacks: "Stacks",
+    analyticsCountries: "Countries",
+    noData: "No data available",
 
     // Footer
     footerTitle: "Let’s connect",

@@ -6,7 +6,7 @@ import ProjectCard from "../components/ProjectCard";
 import StackFilter from "../components/StackFilter";
 import SortSelect from "../components/SortSelect";
 import ViewToggle from "../components/ViewToggle";
-//import VSCodeViewer from "../components/VSCodeViewer";
+import VSCodeViewer from "../components/VSCodeViewer";
 
 export default function Projects() {
   const { lang, t } = useLanguage();

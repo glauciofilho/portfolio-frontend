@@ -40,6 +40,9 @@ export default function Header() {
             <Link to="/projects" className="hover:text-white transition">
               {t.projects}
             </Link>
+            <Link to="/analytics" className="hover:text-white transition">
+              {t.analytics}
+            </Link>
             <Link to="/contact" className="hover:text-white transition">
               {t.contact}
             </Link>
@@ -68,6 +71,7 @@ export default function Header() {
             <Link to="/" onClick={() => setOpen(false)}>Home</Link>
             <Link to="/resume" onClick={() => setOpen(false)}>{t.resume}</Link>
             <Link to="/projects" onClick={() => setOpen(false)}>{t.projects}</Link>
+            <Link to="/analytics" onClick={() => setOpen(false)}>{t.analytics}</Link>
             <Link to="/contact" onClick={() => setOpen(false)}>{t.contact}</Link>
           </div>
         )}
