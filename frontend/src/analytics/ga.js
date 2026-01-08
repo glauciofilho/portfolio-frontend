@@ -1,17 +1,15 @@
-import ReactGA from "react-ga4";
+export const GA_ID = import.meta.env.VITE_GA_ID;
 
-export const initGA = () => {
-  if (!import.meta.env.VITE_GA_ID) return;
-  ReactGA.initialize(import.meta.env.VITE_GA_ID);
-};
+export function trackPageView(path) {
+  if (!window.gtag || !GA_ID) return;
 
-export const trackPage = (path) => {
-  ReactGA.send({
-    hitType: "pageview",
-    page: path,
+  window.gtag("config", GA_ID, {
+    page_path: path,
   });
-};
+}
 
-export const trackEvent = (name, params = {}) => {
-  ReactGA.event(name, params);
-};
+export function trackEvent(name, params = {}) {
+  if (!window.gtag) return;
+
+  window.gtag("event", name, params);
+}
