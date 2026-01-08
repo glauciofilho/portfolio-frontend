@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { getProjects } from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
+import { trackEvent } from "../analytics/ga";
 import ProjectCard from "../components/ProjectCard";
 import StackFilter from "../components/StackFilter";
 import SortSelect from "../components/SortSelect";
@@ -20,6 +21,7 @@ export default function Projects() {
   const [view, setView] = useState("grid");
 
   useEffect(() => {
+    trackEvent("view_projects", {language: lang});
     const controller = new AbortController();
 
     async function loadProjects() {
@@ -151,7 +153,14 @@ export default function Projects() {
               <ProjectCard
                 key={p.id}
                 project={p}
-                onClick={() => setSelectedProjectId(p.id)}
+                onClick={() => {
+                  trackEvent("open_project", {
+                    project_id: p.id,
+                    project_name: p.name,
+                    language: lang,
+                  });
+                  setSelectedProjectId(p.id);
+                }}
               />
             ))}
           </div>

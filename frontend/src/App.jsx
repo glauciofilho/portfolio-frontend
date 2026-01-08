@@ -8,25 +8,30 @@ import Contact from "./pages/Contact";
 import { LanguageProvider } from "./context/LanguageContext";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-
+import AnalyticsProvider from "./analytics/AnalyticsProvider";
 
 export default function App() {
-    return (
-        <LanguageProvider>
-            <ScrollToTop />
-            <div className="min-h-screen bg-cyan-50 text-cyan-950">
-                <Header />
-                <div className="h-28" />
-                <main className="px-4"></main>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/resume" element={<Resume />} />
-                    <Route path="/projects" element={<Projects />} />
-                    <Route path="/analytics" element={<Analytics />} />
-                    <Route path="/contact" element={<Contact />} />
-                </Routes>
-                <Footer />
-            </div>
-        </LanguageProvider>
-    );
+  return (
+    <LanguageProvider>
+      <AnalyticsProvider>
+        <ScrollToTop />
+        <div className="min-h-screen bg-cyan-50 text-cyan-950">
+          <Header />
+          <div className="h-28" />
+
+          <main className="px-4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </main>
+
+          <Footer />
+        </div>
+      </AnalyticsProvider>
+    </LanguageProvider>
+  );
 }

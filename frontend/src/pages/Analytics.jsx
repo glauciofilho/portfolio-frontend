@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { getProjects, getAnalytics } from "../services/api";
-
+import { trackEvent } from "../analytics/ga";
 import StatCard from "../components/analytics/StatCard";
 import ProjectsTimelineChart from "../components/analytics/ProjectsTimelineChart";
 import StackUsageChart from "../components/analytics/StackUsageChart";
@@ -15,6 +15,7 @@ export default function Analytics() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    trackEvent("view_analytics");
     async function load() {
       try {
         setLoading(true);

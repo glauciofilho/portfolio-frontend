@@ -1,7 +1,15 @@
 import { useLanguage } from "../context/LanguageContext";
+import { useEffect } from "react";
+import { trackEvent } from "../analytics/ga";
+
 
 export default function Resume() {
   const { lang, t } = useLanguage();
+
+  useEffect(() => {
+    trackEvent("view_resume");
+  }, []);
+
 
   return (
     <section className="max-w-5xl mx-auto px-6 pt-10 pb-10">
