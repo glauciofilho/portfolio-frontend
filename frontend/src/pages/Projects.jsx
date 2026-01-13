@@ -21,7 +21,7 @@ export default function Projects() {
   const [view, setView] = useState("grid");
 
   useEffect(() => {
-    trackEvent("view_projects", {language: lang});
+    trackEvent("view_projects", {languageCode: lang});
     const controller = new AbortController();
 
     async function loadProjects() {
