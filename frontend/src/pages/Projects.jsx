@@ -157,7 +157,7 @@ export default function Projects() {
                   trackEvent("open_project", {
                     project_id: p.id,
                     project_name: p.name,
-                    language: lang,
+                    languageCode: lang,
                   });
                   setSelectedProjectId(p.id);
                 }}
