@@ -86,10 +86,11 @@ export const translations = {
     analyticsProjectsOverTime: "Projetos ao Longo do Tempo",
     analyticsStacksUsage: "Uso de Tecnologias",
     analyticsProjects: "Projetos",
-    analyticsFiles: "Arquivos",
+    analyticsPageViews: "Visualizações",
     analyticsStacks: "Tecnologias",
     analyticsCountries: "Países",
     noData: "Sem dados disponíveis",
+    acesses: "acessos",
 
     // Footer
     footerTitle: "Vamos nos conectar",
@@ -193,10 +194,11 @@ export const translations = {
     analyticsProjectsOverTime: "Projects Over Time",
     analyticsStacksUsage: "Technology Stack Usage",
     analyticsProjects: "Projects",
-    analyticsFiles: "Files",
+    analyticsPageViews: "Views",
     analyticsStacks: "Stacks",
     analyticsCountries: "Countries",
     noData: "No data available",
+    acesses: "views",
 
     // Footer
     footerTitle: "Let’s connect",

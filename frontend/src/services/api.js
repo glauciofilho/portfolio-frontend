@@ -23,3 +23,21 @@ export async function getAnalytics( lang = "en") {
   if (!res.ok) throw new Error("Error");
   return res.json();
 }
+
+export async function getAnalyticsOverview() {
+  const res = await fetch(`${API_BASE}/analytics/overview/`);
+  if (!res.ok) throw new Error("Error");
+  return res.json();
+}
+
+export async function getAnalyticsCountries() {
+  const res = await fetch(`${API_BASE}/analytics/countries/`);
+  if (!res.ok) throw new Error("Error");
+  return res.json();
+}
+
+export async function getAnalyticsProjects() {
+  const res = await fetch(`${API_BASE}/analytics/projects/`);
+  if (!res.ok) throw new Error("Error");
+  return res.json();
+}

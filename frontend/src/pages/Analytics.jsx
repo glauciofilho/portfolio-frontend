@@ -1,44 +1,67 @@
 import { useEffect, useState, useMemo } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import { getProjects, getAnalytics } from "../services/api";
+import {
+  getProjects,
+  getAnalyticsOverview,
+  getAnalyticsCountries,
+  getAnalyticsProjects,
+} from "../services/api";
 import { trackEvent } from "../analytics/ga";
+
 import StatCard from "../components/analytics/StatCard";
 import ProjectsTimelineChart from "../components/analytics/ProjectsTimelineChart";
 import StackUsageChart from "../components/analytics/StackUsageChart";
-import CountriesChart from "../components/analytics/CountriesChart";
+import CountriesMap from "../components/analytics/CountriesMap";
 import Ranking from "../components/analytics/Ranking";
 
 export default function Analytics() {
   const { t, lang } = useLanguage();
+
   const [projects, setProjects] = useState([]);
-  const [analytics, setAnalytics] = useState(null);
+  const [overview, setOverview] = useState(null);
+  const [countries, setCountries] = useState([]);
+  const [ranking, setRanking] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     trackEvent("view_analytics");
+
     async function load() {
       try {
         setLoading(true);
-        const [projectsData, analyticsData] = await Promise.all([
+
+        const [
+          projectsData,
+          overviewData,
+          countriesData,
+          rankingData,
+        ] = await Promise.all([
           getProjects(),
-          getAnalytics(),
+          getAnalyticsOverview(),
+          getAnalyticsCountries(),
+          getAnalyticsProjects(),
         ]);
 
         setProjects(projectsData);
-        setAnalytics(analyticsData);
+        setOverview(overviewData);
+        setCountries(countriesData);
+        setRanking(rankingData);
+
       } catch (err) {
         console.error("Analytics error:", err);
       } finally {
         setLoading(false);
       }
     }
+
     load();
   }, [lang]);
 
-  const totalFiles = useMemo(() => {
-    if (!analytics?.projects) return 0;
-    return analytics.projects.reduce((acc, p) => acc + (p.total || 0), 0);
-  }, [analytics]);
+  const totalStacks = useMemo(() => {
+    return new Set(
+      projects.flatMap(p => p.stacks.map(s => s.name))
+    ).size;
+  }, [projects]);
 
   if (loading) {
     return (
@@ -50,6 +73,7 @@ export default function Analytics() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 pt-20 pb-24">
+
       {/* HEADER */}
       <header className="mb-14 text-center">
         <h1 className="text-4xl font-bold text-cyan-900 mb-4">
@@ -60,21 +84,23 @@ export default function Analytics() {
         </p>
       </header>
 
-      {/* STATS*/}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-6 mb-16">
-        <StatCard title={t.analyticsProjects} value={projects.length} />
-        <StatCard title={t.analyticsFiles} value={totalFiles} />
+      {/* STATS */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-16">
+        <StatCard
+          title={t.analyticsProjects}
+          value={projects.length}
+        />
+        <StatCard
+          title={t.analyticsPageViews}
+          value={overview?.page_views || 0}
+        />
         <StatCard
           title={t.analyticsStacks}
-          value={
-            new Set(
-              projects.flatMap(p => p.stacks.map(s => s.name))
-            ).size
-          }
+          value={totalStacks}
         />
         <StatCard
           title={t.analyticsCountries}
-          value={analytics?.countries?.length || 0}
+          value={countries.length}
         />
       </div>
 
@@ -82,9 +108,13 @@ export default function Analytics() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <ProjectsTimelineChart projects={projects} />
         <StackUsageChart projects={projects} />
-        <CountriesChart countries={analytics?.countries || []} />
-        <Ranking projects={analytics} />
+        <CountriesMap countries={countries || []} />
+        <Ranking
+          projects={ranking}
+          projectsMeta={projects}
+        />
       </div>
+
     </section>
   );
 }
