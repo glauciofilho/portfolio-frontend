@@ -40,9 +40,9 @@ export default function Header() {
             <Link to="/projects" className="hover:text-white transition">
               {t.projects}
             </Link>
-            <Link to="/analytics" className="hover:text-white transition">
+            {/* <Link to="/analytics" className="hover:text-white transition">
               {t.analytics}
-            </Link>
+            </Link> */}
             <Link to="/contact" className="hover:text-white transition">
               {t.contact}
             </Link>
