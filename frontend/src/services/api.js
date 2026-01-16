@@ -43,7 +43,7 @@ export async function getAnalyticsProjects() {
 }
 
 export async function sendContactMessage(data) {
-  const res = await fetch(`${API_BASE}/contact/`, {
+  const res = await fetch(`${API_BASE}/contacts/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
