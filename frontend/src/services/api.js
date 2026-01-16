@@ -41,3 +41,19 @@ export async function getAnalyticsProjects() {
   if (!res.ok) throw new Error("Error");
   return res.json();
 }
+
+export async function sendContactMessage(data) {
+  const res = await fetch(`${API_BASE}/contact/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to send message");
+  }
+
+  return res.json();
+}

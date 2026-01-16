@@ -92,6 +92,31 @@ export const translations = {
     noData: "Sem dados disponíveis",
     acesses: "acessos",
 
+    // Contact
+    contactTitle: "Vamos conversar",
+    contactDescription:
+      "Fique à vontade para entrar em contato para falar sobre projetos, dados ou oportunidades profissionais.",
+
+    contactProjectsTitle: "Projetos",
+    contactProjectsText:
+      "Demonstrações técnicas, arquitetura de sistemas e soluções orientadas a dados.",
+
+    contactAnalyticsTitle: "Analytics & Dados",
+    contactAnalyticsText:
+      "Análise de dados, automação, dashboards e métricas orientadas a negócio.",
+
+    contactProfessionalTitle: "Contato profissional",
+    contactProfessionalText:
+      "Aberto a oportunidades, parcerias e projetos.",
+
+    contactNote: "Por favor, preencha todos os campos.",
+    contactName: "Nome",
+    contactEmail: "Email",
+    contactMessage: "Mensagem",
+    contactSuccessMessage: "Mensagem enviada com sucesso!",
+    sending: "Enviando...",
+    send: "Enviar",
+
     // Footer
     footerTitle: "Vamos nos conectar",
     footerCTA: "Fale comigo",
@@ -105,6 +130,64 @@ export const translations = {
 
     terms: "Termos de Uso",
     privacy: "Política de Privacidade",
+    cookies: "Política de Cookies",
+
+    // LEGAL / PRIVACY / COOKIES / TERMS
+    privacyTitle: "Política de Privacidade",
+
+    privacyIntro:
+      "Esta Política de Privacidade descreve como Gláucio Alves Pereira Filho ('nós', 'nosso' ou 'conosco') coleta, usa e protege suas informações quando você visita nosso portfólio. Estamos comprometidos com a conformidade às leis de proteção de dados, incluindo a LGPD (Brasil) e GDPR (Europa).",
+
+    privacyDataCollection:
+      "Coletamos dados de duas formas: 1) Informações que você fornece voluntariamente através do nosso formulário de contato (Nome, E-mail e Telefone), e 2) Dados de navegação automatizados coletados via Google Analytics.",
+
+    privacyCollectedData:
+      "Os dados fornecidos diretamente incluem seus detalhes de contato para facilitar a comunicação. Os dados coletados automaticamente incluem endereços IP anonimizados, tipo de navegador, informações do dispositivo e métricas de interação com a página.",
+
+    privacyPurpose:
+      "Os dados pessoais (Nome, Email, Telefone) são usados exclusivamente para responder às suas consultas ou propostas de negócios. Os dados de analytics são usados para analisar o tráfego e melhorar o desempenho e a experiência do usuário no site.",
+
+    privacyNoSharing:
+      "Não vendemos, trocamos ou alugamos suas informações pessoais de identificação para terceiros. Os dados são estritamente confidenciais e acessíveis apenas pelo proprietário do site para os fins acima mencionados.",
+
+    privacyRights:
+      "De acordo com a LGPD e GDPR, você tem o direito de acessar, corrigir ou solicitar a exclusão de seus dados pessoais a qualquer momento. Para exercer esses direitos, entre em contato conosco pelo glauciofilho1997@gmail.com",
+
+    cookiesTitle: "Política de Cookies",
+
+    cookiesIntro:
+      "Este site utiliza cookies para funcionar corretamente e para analisar padrões de tráfego.",
+
+    cookiesUsage:
+      "Utilizamos cookies do Google Analytics para gerar relatórios estatísticos sobre o uso do site. Esses cookies não armazenam informações pessoalmente identificáveis. Ao usar este site, você consente com o processamento de dados sobre você pelo Google.",
+
+    cookiesManagement:
+      "Você pode optar por desabilitar os cookies através das opções do seu navegador. No entanto, isso pode afetar sua capacidade de interagir com certas funcionalidades do site.",
+
+    termsTitle: "Termos de Uso",
+
+    termsIntro:
+      "Ao acessar e usar este portfólio, você aceita e concorda em cumprir os termos e condições deste acordo.",
+
+    termsUsage:
+      "Os materiais e trechos de código fornecidos neste site são apenas para fins de demonstração e portfólio. Eles são fornecidos 'no estado em que se encontram', sem garantia de qualquer tipo, expressa ou implícita.",
+
+    termsCopyright:
+      "Todo o conteúdo, incluindo texto, trechos de código, design e gráficos, é propriedade intelectual de Gláucio Alves Pereira Filho, salvo indicação em contrário. A reprodução ou redistribuição não autorizada é proibida.",
+
+    termsExternalLinks:
+      "Este site contém links para plataformas externas (LinkedIn, GitHub, WhatsApp). Não somos responsáveis pelo conteúdo ou práticas de privacidade desses sites de terceiros.",
+
+    termsAcceptance:
+      "Seu uso contínuo do site após a publicação de alterações nesta política será considerado como sua aceitação dessas mudanças.",
+
+    // COOKIE BANNER
+    cookiesBannerTitle: "Nós usamos cookies",
+    cookiesBannerDescription:
+      "Este site utiliza cookies para melhorar sua experiência e analisar o tráfego. Ao continuar, você concorda com o uso de cookies.",
+    learnMore: "Saiba mais",
+    accept: "Aceitar",
+    reject: "Rejeitar",
   },
 
   en: {
@@ -200,6 +283,27 @@ export const translations = {
     noData: "No data available",
     acesses: "views",
 
+    // Contact
+    contactTitle: "Let's talk",
+    contactDescription:
+      "Feel free to reach out to discuss projects, data, or professional opportunities.",
+    contactProjectsTitle: "Projects",
+    contactProjectsText:
+      "Technical demos, system architecture, and data-driven solutions.",
+    contactAnalyticsTitle: "Analytics & Data",
+    contactAnalyticsText:
+      "Data analysis, automation, dashboards, and business-oriented metrics.",
+    contactProfessionalTitle: "Professional Contact",
+    contactProfessionalText:
+      "Open to opportunities, partnerships, and projects.",
+    contactNote: "Please fill in all fields.",
+    contactName: "Name",
+    contactEmail: "Email",
+    contactMessage: "Message",
+    contactSuccessMessage: "Message sent successfully!",
+    sending: "Sending...",
+    send: "Send",
+
     // Footer
     footerTitle: "Let’s connect",
     footerCTA: "Conctact me",
@@ -213,5 +317,63 @@ export const translations = {
 
     terms: "Terms of Use",
     privacy: "Privacy Policy",
+    cookies: "Cookie Policy",
+
+    // LEGAL / PRIVACY / COOKIES / TERMS
+    privacyTitle: "Privacy Policy",
+
+    privacyIntro:
+      "This Privacy Policy outlines how Gláucio Alves Pereira Filho ('we', 'our', or 'us') collects, uses, and protects your information when you visit our portfolio. We are committed to compliance with data protection laws, including the LGPD (Brazil) and GDPR (Europe).",
+
+    privacyDataCollection:
+      "We collect data in two ways: 1) Information you voluntarily provide via our contact form (Name, E-mail, and Phone number), and 2) Automated browsing data collected via Google Analytics.",
+
+    privacyCollectedData:
+      "Directly provided data includes your contact details to facilitate communication. Automatically collected data includes anonymized IP addresses, browser type, device information, and page interaction metrics.",
+
+    privacyPurpose:
+      "Personal data (Name, Email, Phone) is used solely to respond to your inquiries or business proposals. Analytics data is used to analyze traffic and improve the website's performance and user experience.",
+
+    privacyNoSharing:
+      "We do not sell, trade, or rent your personal identification information to others. Data is strictly confidential and only accessible by the website owner for the purposes stated above.",
+
+    privacyRights:
+      "Under LGPD and GDPR, you have the right to access, correct, or request the deletion of your personal data at any time. To exercise these rights, please contact us at glauciofilho1997@gmail.com.",
+
+    cookiesTitle: "Cookie Policy",
+
+    cookiesIntro:
+      "This website uses cookies to function correctly and to analyze traffic patterns.",
+
+    cookiesUsage:
+      "We use Google Analytics cookies to generate statistical reports on website usage. These cookies do not store personally identifiable information. By using this website, you consent to the processing of data about you by Google.",
+
+    cookiesManagement:
+      "You can choose to disable cookies through your individual browser options. However, this may affect your ability to interact with certain features of the site.",
+
+    termsTitle: "Terms of Use",
+
+    termsIntro:
+      "By accessing and using this portfolio, you accept and agree to be bound by the terms and provision of this agreement.",
+
+    termsUsage:
+      "The materials and code samples provided on this website are for demonstration and portfolio purposes only. They are provided 'as is' without warranty of any kind, express or implied.",
+
+    termsCopyright:
+      "All content, including text, code snippets, design, and graphics, is the intellectual property of Gláucio Alves Pereira Filho, unless otherwise stated. Unauthorized reproduction or redistribution is prohibited.",
+
+    termsExternalLinks:
+      "This website contains links to external platforms (LinkedIn, GitHub, WhatsApp). We are not responsible for the content or privacy practices of these third-party sites.",
+
+    termsAcceptance:
+      "Your continued use of the website following the posting of changes to this policy will be deemed your acceptance of those changes.",
+
+    // COOKIE BANNER
+    cookiesBannerTitle: "We use cookies",
+    cookiesBannerDescription:
+      "This website uses cookies to enhance your experience and analyze traffic. By continuing, you agree to the use of cookies.",
+    learnMore: "Learn more",
+    accept: "Accept",
+    reject: "Reject",
   },
 };

@@ -27,9 +27,9 @@ export default function Header() {
         <div className="flex items-center justify-between px-8 py-5">
 
           {/* LOGO */}
-          <span className="font-bold text-white text-xl tracking-wide">
+          <Link to="/" className="font-bold text-white text-xl tracking-wide">
             GAPF
-          </span>
+          </Link>
 
           {/* DESKTOP NAV */}
           <nav className="hidden md:flex gap-12 text-cyan-300 text-lg font-medium">

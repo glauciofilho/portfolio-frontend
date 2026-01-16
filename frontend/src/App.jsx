@@ -1,3 +1,4 @@
+import CookieBanner from "./components/CoockeBanner";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -10,6 +11,9 @@ import Resume from "./pages/Resume";
 import Projects from "./pages/Projects";
 import Analytics from "./pages/Analytics";
 import Contact from "./pages/Contact";
+import Cookies from "./pages/Cookies";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 import { LanguageProvider } from "./context/LanguageContext";
 import { trackPageView } from "./analytics/ga";
@@ -37,7 +41,12 @@ export default function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
+
+        <CookieBanner />
 
         <Footer />
       </div>
