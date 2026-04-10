@@ -17,7 +17,7 @@ export default function Projects() {
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedStacks, setSelectedStacks] = useState([]);
-  const [sortBy, setSortBy] = useState("date_desc"); // Padrão ajustado
+  const [sortBy, setSortBy] = useState("date_desc");
   const [view, setView] = useState("grid");
 
   useEffect(() => {
@@ -51,21 +51,18 @@ export default function Projects() {
   const filteredProjects = useMemo(() => {
     let result = [...projects];
 
-    // Busca por nome
     if (search) {
       result = result.filter(p =>
         p.name.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    // Filtro por stacks (multi)
     if (selectedStacks.length > 0) {
       result = result.filter(p =>
         p.stacks.some(s => selectedStacks.includes(s.name))
       );
     }
 
-    // Ordenação Atualizada (Item 6)
     result.sort((a, b) => {
       const dateA = new Date(a.created_at);
       const dateB = new Date(b.created_at);
@@ -90,7 +87,7 @@ export default function Projects() {
 
   if (loading) {
     return (
-      <section className="pt-32 text-center text-cyan-400">
+      <section className="pt-32 pb-24 max-w-7xl mx-auto px-6 text-center text-cyan-600 animate-pulse font-medium">
         {t.loadingProjects}
       </section>
     );
@@ -98,57 +95,54 @@ export default function Projects() {
 
   return (
     <>
-      <section className="max-w-7xl mx-auto px-6 pt-20 pb-24">
-
-        {/* HEADER */}
-        <header className="text-center mb-14">
-          <h1 className="text-4xl font-bold text-cyan-900 mb-4">
+      <main className="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+        {/* HEADER (Estilo Editorial) */}
+        <header className="mb-12">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-cyan-950 tracking-tight mb-4">
             {t.projects}
           </h1>
-          <p className="max-w-2xl mx-auto text-cyan-600">
+          <p className="text-cyan-700 max-w-2xl text-lg leading-relaxed">
             {t.projectsDescription}
           </p>
         </header>
 
-        {/* FILTER BAR */}
-        <div className="flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center mb-10">
+        {/* FILTERS BAR (Visual Hub Curado) */}
+        <section className="bg-cyan-50/50 border border-cyan-100 p-4 rounded-2xl mb-12 flex flex-col md:flex-row gap-4 items-center">
+          {/* BARRA DE PESQUISA */}
+          <div className="relative w-full md:flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-600" size={20} />
+            <input
+              type="text"
+              placeholder={t.searchProject}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-white rounded-xl border border-cyan-100 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 outline-none text-cyan-950 transition-all shadow-sm"
+            />
+          </div>
 
-          <div className="flex flex-wrap gap-3 w-full lg:w-auto">
-
-            {/* SEARCH (Mudado para primeiro para melhor UX mobile, ou manter ordem) */}
-            <div className="relative group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-95 group-focus-within:text-cyan-950" size={18} />
-              <input
-                type="text"
-                placeholder={t.searchProject}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full sm:w-64 rounded-lg bg-cyan-50 border border-cyan-950 text-sm text-cyan-950 placeholder-cyan-950 outline-none focus:ring-2 focus:ring-cyan-950 focus:border-transparent transition-all"
-              />
-            </div>
-
-            {/* STACK FILTER */}
+          {/* COMPONENTES DE FILTRO E ORDENAÇÃO */}
+          <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+            {/* Como os seus StackFilter e SortSelect são componentes filhos,
+                eles devem assumir o visual dessa barra branca com sombra leve
+                Para ficar perfeito, o ideal seria que os selects dentro deles
+                tivessem classes como: bg-white border border-cyan-100 rounded-xl py-3 px-4 */}
             <StackFilter
               stacks={allStacks}
               selected={selectedStacks}
               onChange={setSelectedStacks}
             />
 
-            {/* SORT */}
             <SortSelect value={sortBy} onChange={setSortBy} />
-
-          </div>
-
-          {/* VIEW TOGGLE */}
-          <div className="hidden lg:block self-end lg:self-auto">
+            {/* O toggle de view só aparece em telas grandes */}
+            <div className="hidden lg:flex items-center">
               <ViewToggle value={view} onChange={setView} />
+            </div>
           </div>
+        </section>
 
-        </div>
-
-        {/* PROJECTS GRID/LIST */}
+        {/* PROJECT GRID */}
         {filteredProjects.length > 0 ? (
-          <div className= {view === "grid" ? ("grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8") : ("flex flex-col gap-4")}>
+          <div className={view === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" : "flex flex-col gap-6"}>
             {filteredProjects.map(p => (
               <ProjectCard
                 key={p.id}
@@ -165,20 +159,21 @@ export default function Projects() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-cyan-900/50 rounded-2xl border border-cyan-800 border-dashed">
-              <p className="text-cyan-50 font-medium"> {t.notfind}</p>
-              <button
-                  onClick={() => {
-                      setSearch("");
-                      setSelectedStacks([]);
-                  }}
-                  className="mt-4 text-cyan-50 hover:underline text-sm"
-              >
-                  {t.clearFilters}
-              </button>
+          /* EMPTY STATE (Quando a busca não encontra nada) */
+          <div className="text-center py-20 bg-cyan-50 rounded-2xl border border-cyan-200 border-dashed">
+            <p className="text-cyan-700 font-medium mb-4">{t.notfind}</p>
+            <button
+              onClick={() => {
+                setSearch("");
+                setSelectedStacks([]);
+              }}
+              className="px-6 py-2 bg-white text-cyan-800 border border-cyan-200 rounded-xl hover:bg-cyan-100 transition-colors text-sm font-semibold shadow-sm"
+            >
+              {t.clearFilters}
+            </button>
           </div>
         )}
-      </section>
+      </main>
 
       {/* MODAL / VIEWER EM TELA CHEIA */}
       {selectedProjectId && (

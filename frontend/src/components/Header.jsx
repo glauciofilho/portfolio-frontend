@@ -21,7 +21,7 @@ export default function Header() {
         className={`mx-auto transition-all duration-300 bg-cyan-950 ${
           scrolled
             ? "max-w-full rounded-b-3xl shadow-lg"
-            : "max-w-6xl rounded-2xl shadow-md mt-4"
+            : "max-w-6xl rounded-full shadow-md mt-4"
         }`}
       >
         <div className="flex items-center justify-between px-8 py-5">
