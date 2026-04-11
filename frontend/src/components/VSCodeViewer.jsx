@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
-import { 
-  X, Files, Search, GitBranch, LayoutGrid, Settings, 
-  UserCircle, ChevronRight, FolderOpen, Terminal, 
+import {
+  X, Files, Search, GitBranch, LayoutGrid, Settings,
+  UserCircle, ChevronRight, FolderOpen, Terminal,
   AlertCircle, Bell, RefreshCw, FileCode
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
@@ -80,12 +80,12 @@ export default function VSCodeViewer({ projectId, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-[#001a28]/80 backdrop-blur-md flex items-center justify-center p-4 md:p-8">
-      
+
       {/* APP SHELL (VS CODE LAYOUT) */}
       <div className="w-full h-full bg-[#001a28] rounded-2xl overflow-hidden flex flex-col shadow-[0px_20px_50px_rgba(0,0,0,0.5)] border border-white/5">
-        
+
         <div className="flex flex-1 overflow-hidden">
-          
+
           {/* 1. ACTIVITY BAR (Far Left) */}
           <aside className="w-12 md:w-16 bg-[#0a2f42] border-r border-white/5 flex flex-col items-center py-4 gap-4 shrink-0">
             <div className="p-2 text-white border-l-2 border-cyan-300 bg-white/5">
@@ -112,13 +112,13 @@ export default function VSCodeViewer({ projectId, onClose }) {
               <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Explorer</span>
               <X size={14} className="text-slate-500 cursor-pointer hover:text-white" onClick={onClose} />
             </div>
-            
+
             <div className="flex-1 overflow-y-auto pt-2">
               <div className="px-4 py-1 flex items-center gap-2 text-white text-sm font-semibold mb-1">
                 <ChevronRight size={14} className="text-slate-500" />
                 <span>{data?.project?.name?.toUpperCase()}</span>
               </div>
-              
+
               <div className="pl-2">
                 {fileTree.map(node => (
                   <FileTree
@@ -141,7 +141,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
 
           {/* 3. MAIN CONTENT AREA */}
           <main className="flex-1 flex flex-col relative bg-[#001a28]">
-            
+
             {/* TABS BAR */}
             <header className="flex bg-[#0a2f42] h-10 border-b border-white/5">
               {activeFile && (
@@ -189,7 +189,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
                     <p className="text-[9px] text-cyan-600 tracking-wider uppercase font-bold">Precision Architecture</p>
                   </div>
                 </div>
-                
                 <p className="text-xs text-slate-600 mb-6 leading-relaxed line-clamp-3">
                   {data?.project?.summary}
                 </p>
@@ -197,16 +196,16 @@ export default function VSCodeViewer({ projectId, onClose }) {
                 {/* STACKS BADGES */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   {data?.project?.stacks?.map(stack => (
-                    <img 
-                      key={stack.id} 
-                      src={stack.badge_url} 
-                      alt={stack.name} 
-                      className="h-4 opacity-80" 
+                    <img
+                      key={stack.id}
+                      src={stack.badge_url}
+                      alt={stack.name}
+                      className="h-4 opacity-80"
                     />
                   ))}
                 </div>
 
-                <button 
+                <button
                   onClick={onClose}
                   className="w-full bg-[#0a2f42] text-white py-2.5 rounded-xl text-xs font-bold hover:bg-[#006781] transition-colors flex items-center justify-center gap-2"
                 >
