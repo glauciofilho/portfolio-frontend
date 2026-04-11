@@ -39,6 +39,8 @@ export const translations = {
     // VSCode Viewer
     vscodeLoading: "Carregando projeto...",
     vscodeNoFile: "Selecione um arquivo para visualizar seu conteúdo.",
+    switchproject: "Alternar Projeto",
+    readyforinspection: "Pronto para Inspeção",
 
     // RESUME
     resumeRole:
@@ -230,6 +232,8 @@ export const translations = {
     // VSCode Viewer
     vscodeLoading: "Loading project...",
     vscodeNoFile: "Select a file to view its content.",
+    readyforinspection: "Ready for Inspection",
+    switchproject: "Switch Project",
 
     // RESUME
     resumeRole:

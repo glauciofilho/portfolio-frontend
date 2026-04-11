@@ -7,14 +7,12 @@ import FileTree from "./FileTree";
 export default function VSCodeViewer({ projectId, onClose }) {
   // 1. Corrigido para setLang (seu Contexto usa setLang)
   const { lang, setLang, t } = useLanguage();
-  
   const [allProjects, setAllProjects] = useState([]);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeFile, setActiveFile] = useState(null);
   const [fileContent, setFileContent] = useState(null);
   const [currentProjectId, setCurrentProjectId] = useState(projectId);
-  
   // Controle da barra lateral para mobile/tablet
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -90,15 +88,15 @@ export default function VSCodeViewer({ projectId, onClose }) {
   return (
     // Backdrop com Padding constante (Garante o efeito de "Ilha")
     <div className="fixed inset-0 z-50 bg-[#001a28]/80 backdrop-blur-md flex items-center justify-center p-4 md:p-8">
-      
+
       {/* CONTAINER DA ILHA */}
       <div className="w-full h-full max-w-7xl bg-[#001a28] rounded-2xl overflow-hidden flex flex-col shadow-2xl border border-white/5 relative">
-        
+
         <div className="flex flex-1 overflow-hidden relative">
-          
+
           {/* BOTÃO DE SETA (Trigger da Gaveta) - Visível apenas em telas < lg e quando fechado */}
           {!isSidebarOpen && (
-            <button 
+            <button
               onClick={() => setIsSidebarOpen(true)}
               className="lg:hidden absolute left-0 top-1/2 -translate-y-1/2 z-40 bg-cyan-600/90 text-white p-2 rounded-r-xl shadow-lg hover:bg-cyan-500 transition-all"
             >
@@ -112,11 +110,11 @@ export default function VSCodeViewer({ projectId, onClose }) {
             transition-transform duration-300 ease-in-out
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}>
-            
+
             {/* Header Sidebar com Fechar (Mobile) */}
             <div className="p-4 border-b border-white/5 flex justify-between items-center">
               <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
-                Switch Project
+                {t.switchproject}
               </span>
               <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
                 <ChevronLeft size={20} />
@@ -125,7 +123,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
 
             {/* Select de Projetos */}
             <div className="px-4 py-3">
-              <select 
+              <select
                 value={currentProjectId}
                 onChange={(e) => setCurrentProjectId(e.target.value)}
                 className="w-full bg-[#001a28] text-white text-xs border border-white/10 rounded-lg p-2 outline-none cursor-pointer hover:border-cyan-500/50 transition-colors"
@@ -141,7 +139,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
               <div className="px-4 py-2 text-cyan-300 text-[10px] font-bold tracking-widest uppercase opacity-70">
                 Explorer
               </div>
-              
+
               {loading ? (
                 <div className="px-6 py-4 text-slate-500 text-xs animate-pulse">Loading...</div>
               ) : (
@@ -169,7 +167,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
 
             {/* MUDANÇA DE LINGUAGEM (Bottom Left) */}
             <div className="p-4 border-t border-white/5 bg-[#0a2f42]">
-              <button 
+              <button
                 onClick={() => setLang(lang === 'en' ? 'pt' : 'en')}
                 className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-medium w-full group"
               >
@@ -182,8 +180,8 @@ export default function VSCodeViewer({ projectId, onClose }) {
 
           {/* OVERLAY PARA FECHAR (Mobile) */}
           {isSidebarOpen && (
-            <div 
-              className="absolute inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-[2px]" 
+            <div
+              className="absolute inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-[2px]"
               onClick={() => setIsSidebarOpen(false)}
             />
           )}
@@ -216,7 +214,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center text-slate-600 gap-4 opacity-30 select-none">
                   <Terminal size={64} />
-                  <p className="font-mono text-xs tracking-[0.2em] uppercase">Ready for Inspection</p>
+                  <p className="font-mono text-xs tracking-[0.2em] uppercase">{t.readyforinspection}</p>
                 </div>
               )}
             </div>
