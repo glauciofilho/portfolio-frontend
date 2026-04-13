@@ -45,6 +45,8 @@ export const translations = {
     // RESUME
     resumeRole:
       "Analista de Dados | SQL • Python • Power BI • ETL/ELT",
+    strategic: "Engenharia",
+    engineering: "Estratégica",
     resumeSummary:
       "Analista de Dados com mais de 4 anos de experiência desenvolvendo soluções analíticas que conectam estratégia de negócio a dados. Especialista em automação, integração e visualização, com foco em confiabilidade, governança e suporte à tomada de decisão.",
 
@@ -79,7 +81,21 @@ export const translations = {
     resumeEducation:
       "Bacharelado em Engenharia Civil (2023) - Universidade Federal de Goiás",
 
+    microsoftCertified: "Certificado Microsoft",
+    dataanalystassociate: "Analista de Dados Associado",
+    examPL300: "Exame PL-300",
+
     downloadCV: "Baixar Currículo",
+
+    availableRemote: "Disponível para trabalho remoto",
+    fullStack: "Analista de Dados Full Stack",
+    expertise: "Expertise",
+    fullStackDescription: "Domínio completo do ciclo de dados, desde a extração e transformação até a visualização e automação, garantindo soluções analíticas robustas e escaláveis.",
+    focus: "Foco",
+    precision: "Precisão Analítica",
+    precisionDescription: "Compromisso com a qualidade e confiabilidade dos dados, implementando rigorosas rotinas de validação e governança para garantir insights precisos e acionáveis.",
+    commitment: "Compromisso",
+    commitmentDescription: "Dedicação total a cada projeto, buscando constantemente otimizar processos, melhorar a performance e entregar valor real através de dados.",
 
     // Analytics
     analyticsTitle: "Analytics",
@@ -238,6 +254,8 @@ export const translations = {
     // RESUME
     resumeRole:
       "Data Analyst | SQL • Python • Power BI • ETL/ELT",
+    strategic: "Strategic",
+    engineering: "Engineering",
     resumeSummary:
       "Data Analyst with over 4 years of experience developing analytical solutions that connect business strategy with data. Specialized in automation, integration, and visualization, focusing on reliability, governance, and decision support.",
 
@@ -272,7 +290,21 @@ export const translations = {
     resumeEducation:
       "Bachelor’s Degree in Civil Engineering (2023) - Federal University of Goiás",
 
+    microsoftCertified: "Microsoft Certified",
+    dataanalystassociate: "Data Analyst Associate",
+    examPL300: "Exam PL-300",
+
     downloadCV: "Download CV",
+
+    availableRemote: "Available for Remote Work",
+    fullStack: "Full Stack Data Analyst",
+    expertise: "Expertise",
+    fullStackDescription: "Comprehensive mastery of the data lifecycle, from extraction and transformation to visualization and automation, ensuring robust and scalable analytical solutions.",
+    focus: "Focus",
+    precision: "Analytical Precision",
+    precisionDescription: "Commitment to data quality and reliability, implementing rigorous validation and governance routines to ensure accurate and actionable insights.",
+    commitment: "Commitment",
+    commitmentDescription: "Total dedication to each project, constantly seeking to optimize processes, improve performance, and deliver real value through data.",
 
     // Analytics
     analyticsTitle: "Analytics",

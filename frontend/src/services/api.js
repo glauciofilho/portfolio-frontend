@@ -18,6 +18,12 @@ export async function getFile(numberProject, numberFile, lang = "en") {
   return res.json();
 }
 
+export async function getResume(lang = "en") {
+  const res = await fetch(`${API_BASE}/api/resume/?lang=${lang}`);
+  if (!res.ok) throw new Error("Error");
+  return res.json();
+}
+
 export async function getAnalytics( lang = "en") {
   const res = await fetch(`${API_BASE}/api/analytics/?lang=${lang}`);
   if (!res.ok) throw new Error("Error");
