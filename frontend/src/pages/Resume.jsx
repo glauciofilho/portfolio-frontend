@@ -161,10 +161,10 @@ export default function Resume() {
 
       {/* 5. MODAL (ILHA) */}
       {modal.isOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full h-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full h-full max-w-5xl bg-#001a28 rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
             <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white">
-              <h3 className="text-sm font-bold text-cyan-950 uppercase tracking-widest">{modal.title}</h3>
+              <h3 className="text-sm font-bold text-white uppercase tracking-widest">{modal.title}</h3>
               <div className="flex items-center gap-4">
                 <a href={modal.url} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-600 p-2">
                   <ExternalLink size={20} />
