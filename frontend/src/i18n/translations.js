@@ -1,3 +1,5 @@
+import { data } from "react-router-dom";
+
 export const translations = {
   pt: {
     // Header / Geral
@@ -14,6 +16,24 @@ export const translations = {
     homeTitle: "Analista de Dados",
     about:
       "Transformando dados em insights estratégicos através de análise, visualização e automação.",
+
+    experienceYears: "4+ anos de experiência",
+    sqlPythonExpert: "Especialista em SQL & Python",
+    biAutomation: "BI & Automação",
+    dataStorytelling: "Contação de Histórias de Dados",
+    portifolio: "Portfólio",
+    viewAllProjects: "Ver todos os projetos",
+    dataEngineering: "Engenharia de Dados",
+    etlEltPipelines: "Pipelines ETL/ELT",
+    sqlAdvancedNoSQL: "SQL Avançado & NoSQL",
+    starSchemaModeling: "Modelagem Star Schema",
+    analysisViz: "Análise & Visualização",
+    powerBIDashboards: "Dashboards Power BI",
+    pythonPandasSeaborn: "Python (Pandas/Seaborn)",
+    automation: "Automação",
+    n8nProcesses: "Processos com n8n",
+    apiIntegration: "Integração de APIs",
+    pythonScripts: "Scripts em Python",
 
     //Projetos
     projectsDescription:
@@ -224,7 +244,25 @@ export const translations = {
     about:
       "Transforming data into strategic insights through analysis, visualization and automation.",
 
-    // Projects
+    experienceYears: "4+ years of experience",
+    sqlPythonExpert: "SQL & Python Expert",
+    biAutomation: "BI & Automation",
+    dataStorytelling: "Data Storytelling",
+    portifolio: "Portfolio",
+    viewAllProjects: "View all projects",
+    dataEngineering: "Data Engineering",
+    etlEltPipelines: "ETL/ELT Pipelines",
+    sqlAdvancedNoSQL: "SQL Advanced & NoSQL",
+    starSchemaModeling: "Star Schema Modeling",
+    analysisViz: "Analysis & Visualization",
+    powerBIDashboards: "Power BI Dashboards",
+    pythonPandasSeaborn: "Python (Pandas/Seaborn)",
+    automation: "Automation",
+    n8nProcesses: "Processes with n8n",
+    apiIntegration: "API Integration",
+    pythonScripts: "Python Scripts",
+
+      // Projects
     projectsDescription:
       "Here are some of my recent projects that showcase my skills in data analysis, visualization, and automation.",
     searchProjects: "Search projects...",

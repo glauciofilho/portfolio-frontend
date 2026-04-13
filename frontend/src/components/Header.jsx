@@ -18,11 +18,19 @@ export default function Header() {
   return (
     <header className="fixed top-0 z-50 w-full">
       <div
-        className={`mx-auto transition-all duration-300 bg-cyan-950 ${
-          scrolled
-            ? "max-w-full rounded-b-3xl shadow-lg"
-            : "max-w-6xl rounded-full shadow-md mt-4"
-        }`}
+        className={`mx-auto transition-all duration-300 bg-cyan-950
+          /* MOBILE: Sempre full width e colado no topo */
+          w-full mt-0 rounded-b-3xl shadow-lg
+
+          /* DESKTOP (md): Comportamento de Ilha ou Barra fixa */
+          ${scrolled
+            ? "md:max-w-full md:rounded-b-3xl md:shadow-lg md:mt-0"
+            : "md:max-w-6xl md:rounded-full md:shadow-md md:mt-4"
+          }
+
+          /* Se o menu mobile estiver aberto, removemos arredondamentos para não cortar o conteúdo */
+          ${open ? "rounded-none" : ""}
+        `}
       >
         <div className="flex items-center justify-between px-8 py-5">
 
@@ -40,9 +48,6 @@ export default function Header() {
             <Link to="/projects" className="hover:text-white transition">
               {t.projects}
             </Link>
-            {/* <Link to="/analytics" className="hover:text-white transition">
-              {t.analytics}
-            </Link> */}
             <Link to="/contact" className="hover:text-white transition">
               {t.contact}
             </Link>
@@ -62,17 +67,15 @@ export default function Header() {
               {open ? <X /> : <Menu />}
             </button>
           </div>
-
         </div>
 
-        {/* MOBILE MENU */}
+        {/* MOBILE MENU - Refatorado para melhor visual */}
         {open && (
-          <div className="md:hidden flex flex-col gap-6 px-8 pb-6 text-cyan-300 text-lg">
-            <Link to="/" onClick={() => setOpen(false)}>Home</Link>
-            <Link to="/resume" onClick={() => setOpen(false)}>{t.resume}</Link>
-            <Link to="/projects" onClick={() => setOpen(false)}>{t.projects}</Link>
-            {/* <Link to="/analytics" onClick={() => setOpen(false)}>{t.analytics}</Link> */}
-            <Link to="/contact" onClick={() => setOpen(false)}>{t.contact}</Link>
+          <div className="md:hidden flex flex-col gap-6 px-8 pb-8 text-cyan-300 text-lg border-t border-cyan-900 pt-4">
+            <Link to="/" className="hover:text-white" onClick={() => setOpen(false)}>Home</Link>
+            <Link to="/resume" className="hover:text-white" onClick={() => setOpen(false)}>{t.resume}</Link>
+            <Link to="/projects" className="hover:text-white" onClick={() => setOpen(false)}>{t.projects}</Link>
+            <Link to="/contact" className="hover:text-white" onClick={() => setOpen(false)}>{t.contact}</Link>
           </div>
         )}
       </div>
