@@ -83,7 +83,7 @@ export const translations = {
 
     microsoftCertified: "Certificado Microsoft",
     dataanalystassociate: "Analista de Dados Associado",
-    examPL300: "Exame PL-300",
+    clicktoverifycredentials: "Clique para verificar credenciais",
 
     downloadCV: "Baixar Currículo",
 
@@ -292,7 +292,7 @@ export const translations = {
 
     microsoftCertified: "Microsoft Certified",
     dataanalystassociate: "Data Analyst Associate",
-    examPL300: "Exam PL-300",
+    clicktoverifycredentials: "Click to verify credentials",
 
     downloadCV: "Download CV",
 
