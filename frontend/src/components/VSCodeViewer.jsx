@@ -19,12 +19,14 @@ export default function VSCodeViewer({ projectId, onClose }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const isOpen = Boolean(projectId);
 
+  // Bloqueio de scroll do body
   useEffect(() => {
     if (!isOpen) return;
     document.body.style.overflow = "hidden";
     return () => (document.body.style.overflow = "");
   }, [isOpen]);
 
+  // Carregar lista de todos os projetos (para o seletor lateral)
   useEffect(() => {
     async function fetchAll() {
       try {
@@ -38,6 +40,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
     fetchAll();
   }, [lang]);
 
+  // Carregar dados do projeto e busca automática de README
   useEffect(() => {
     if (!currentProjectId) return;
     const controller = new AbortController();
@@ -47,8 +50,21 @@ export default function VSCodeViewer({ projectId, onClose }) {
         setLoading(true);
         const result = await getOneProject(currentProjectId, lang, controller.signal);
         setData(result);
+
         setActiveFile(null);
         setFileContent(null);
+
+        const readmeFile = result.files.find(f =>
+          f.path.toLowerCase() === "readme.md" || f.path.toLowerCase() === "readme"
+        );
+
+        if (readmeFile) {
+          const fileNode = { id: readmeFile.id, name: readmeFile.path, type: "file" };
+          setActiveFile(fileNode);
+          const res = await getFile(currentProjectId, readmeFile.id, lang);
+          setFileContent(res.content);
+        }
+
       } catch (err) {
         if (err.name !== "AbortError") console.error(err);
       } finally {
@@ -60,12 +76,12 @@ export default function VSCodeViewer({ projectId, onClose }) {
     return () => controller.abort();
   }, [currentProjectId, lang]);
 
-const fileTree = useMemo(() => {
+  // Construção da Árvore de Arquivos com Ordenação (Pastas primeiro, depois A-Z)
+  const fileTree = useMemo(() => {
     if (!data?.files) return [];
 
     const root = [];
 
-    // 1. Monta a estrutura básica da árvore (como você já tinha)
     data.files.forEach(file => {
       const parts = file.path.split("/");
       let current = root;
@@ -92,14 +108,11 @@ const fileTree = useMemo(() => {
       nodes.sort((a, b) => {
         if (a.type === "folder" && b.type === "file") return -1;
         if (a.type === "file" && b.type === "folder") return 1;
-
         return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
       });
 
       nodes.forEach(node => {
-        if (node.children) {
-          sortNodes(node.children);
-        }
+        if (node.children) sortNodes(node.children);
       });
 
       return nodes;
@@ -112,11 +125,9 @@ const fileTree = useMemo(() => {
 
   return (
     <div className="fixed inset-0 z-50 bg-[#001a28]/80 backdrop-blur-md flex items-center justify-center p-4 md:p-8">
-
       <div className="w-full h-full max-w-7xl bg-[#001a28] rounded-2xl overflow-hidden flex flex-col shadow-2xl border border-white/5 relative">
-
         <div className="flex flex-1 overflow-hidden relative">
-
+          {/* Botão lateral Mobile */}
           {!isSidebarOpen && (
             <button
               onClick={() => setIsSidebarOpen(true)}
@@ -126,12 +137,12 @@ const fileTree = useMemo(() => {
             </button>
           )}
 
+          {/* Sidebar */}
           <aside className={`
             absolute lg:relative z-40 h-full w-64 bg-[#0a2f42] border-r border-white/5 flex flex-col shrink-0
             transition-transform duration-300 ease-in-out
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}>
-
             <div className="p-4 border-b border-white/5 flex justify-between items-center">
               <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
                 {t.switchproject}
@@ -194,6 +205,7 @@ const fileTree = useMemo(() => {
             </div>
           </aside>
 
+          {/* Overlay Mobile */}
           {isSidebarOpen && (
             <div
               className="absolute inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-[2px]"
@@ -201,6 +213,7 @@ const fileTree = useMemo(() => {
             />
           )}
 
+          {/* Área Principal */}
           <main className="flex-1 flex flex-col relative bg-[#001a28]">
             <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4 shrink-0">
               <div className="flex h-full overflow-x-auto no-scrollbar">
@@ -216,7 +229,6 @@ const fileTree = useMemo(() => {
               </button>
             </header>
 
-            {/* MARRKDOWN VIEWER: Substitui o antigo iframe */}
             <div className="flex-1 relative overflow-y-auto bg-[#001a28] custom-scrollbar">
               {activeFile ? (
                 fileContent ? (
