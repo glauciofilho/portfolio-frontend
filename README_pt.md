@@ -26,6 +26,7 @@ Um portfólio profissional moderno e interativo desenvolvido com **React 19**, *
 - [Deployment](#deployment)
 - [Contribuindo](#contribuindo)
 - [Perguntas Frequentes](#perguntas-frequentes)
+- [Changelog](#-changelog)
 - [Licença](#licença)
 
 ---
@@ -48,6 +49,8 @@ Este portfólio é uma aplicação web moderna que apresenta:
 ## 🌐 Verificar Online
 
 [Acesse o portfólio ao vivo](https://glauciofilho.com)
+
+> 📖 **Histórico de Versões**: Veja o arquivo [CHANGELOG.md](CHANGELOG.md) para detalhes de todas as versões e mudanças
 
 ---
 
@@ -370,11 +373,291 @@ trackEvent('filter_applied', { stack: 'React' });
 
 ---
 
+## 📄 Documentação das Páginas
+
+A aplicação consiste em 8 páginas principais, cada uma com funcionalidade específica:
+
+### 🏠 Página Inicial
+**Rota**: `/`  
+**Arquivo**: `src/pages/Home.jsx`
+
+**Funcionalidades**:
+- Seção hero com perfil do desenvolvedor e badge Microsoft Certified
+- Título profissional e resumo sobre
+- Destaques de experiência (4+ anos, Especialista SQL & Python, BI & Automação)
+- Links de redes sociais (GitHub, LinkedIn, Email, WhatsApp)
+- Seção de projetos em destaque (últimos 3 projetos)
+- Botões de call-to-action para página de projetos
+- Design totalmente responsivo
+
+**Componentes Principais Usados**:
+- ProjectCard
+- Ícones Lucide (CheckCircle2, Github, Linkedin, Mail, MessageCircle)
+- Language context para traduções
+
+---
+
+### 📁 Página de Projetos
+**Rota**: `/projects`  
+**Arquivo**: `src/pages/Projects.jsx`
+
+**Funcionalidades**:
+- Galeria completa de projetos
+- Filtros avançados por tecnologia
+- Opções de ordenação (data, popularidade, nome, A-Z)
+- Toggle de visualização (modo grid/lista)
+- Cards de projeto com imagem, título, descrição e tags
+- Modal ou visualização expandida de detalhes
+- Busca de projetos
+- Suporte a paginação
+
+**Componentes Principais Usados**:
+- ProjectCard
+- StackFilter
+- SortSelect
+- ViewToggle
+- FileTree (para estrutura do projeto)
+
+**Fonte de Dados**:
+- Busca de `GET /api/projects/?lang=pt`
+- Suporta parâmetro de idioma para conteúdo multilíngue
+
+---
+
+### 📊 Página de Análises
+**Rota**: `/analytics`  
+**Arquivo**: `src/pages/Analytics.jsx`
+
+**Funcionalidades**:
+- Dashboard de estatísticas de visitantes
+- Mapa geográfico de visitantes (por país)
+- Gráfico de timeline mostrando histórico de visitantes
+- Ranking de popularidade de projetos
+- Estatísticas de uso de tecnologias
+- Cartões estatísticos com métricas principais
+- Visualização de dados em tempo real
+- Layouts de gráficos responsivos
+
+**Componentes Principais Usados**:
+- StatCard
+- CountriesMap (React Simple Maps)
+- ProjectsTimelineChart (Recharts)
+- Ranking
+- StackUsageChart (Recharts)
+
+**Fonte de Dados**:
+- Busca de `GET /api/analytics/?lang=pt`
+- Requer integração com Google Analytics 4
+- Respeita consentimento do usuário (LGPD/GDPR)
+
+---
+
+### 📄 Página de Currículo
+**Rota**: `/resume`  
+**Arquivo**: `src/pages/Resume.jsx`
+
+**Funcionalidades**:
+- Seção de experiência profissional
+- Formação educacional e certificações
+- Habilidades técnicas (linguagens, frameworks, ferramentas)
+- Apresentação de soft skills
+- Opção de download de PDF
+- Exibição baseada em timeline
+- Exibição de badges de certificações
+- Informações de contato
+
+**Seções**:
+- Resumo Profissional
+- Experiência de Trabalho
+- Educação
+- Certificações
+- Habilidades Técnicas
+- Soft Skills
+- Botão de Exportação PDF
+
+**Fonte de Dados**:
+- Busca de `GET /api/resume/?lang=pt`
+- Suporte a conteúdo multilíngue
+
+---
+
+### ✉️ Página de Contato
+**Rota**: `/contact`  
+**Arquivo**: `src/pages/Contact.jsx`
+
+**Funcionalidades**:
+- Formulário de contato (nome, email, assunto, mensagem)
+- Validação de formulário
+- Funcionalidade de envio
+- Links de redes sociais
+- Informações de contato por email
+- Link de integração com WhatsApp
+- Link de perfil LinkedIn
+- Link de perfil GitHub
+- Mensagens de sucesso/erro
+
+**Componentes Principais**:
+- Inputs de formulário com validação
+- Botão de envio
+- Links sociais
+- Estados de carregamento
+
+---
+
+### 🔐 Página de Política de Privacidade
+**Rota**: `/privacy`  
+**Arquivo**: `src/pages/Privacy.jsx`
+
+**Funcionalidades**:
+- Documento de política de privacidade abrangente
+- Conformidade com LGPD (Lei Geral de Proteção de Dados)
+- Conformidade com GDPR (Regulamento Geral de Proteção de Dados)
+- Explicação sobre coleta de dados
+- Informações sobre direitos do usuário
+- Políticas de uso de dados
+- Informações de contato para preocupações com privacidade
+- Data da última atualização
+
+**Seções**:
+- Introdução
+- Informações que Coletamos
+- Como Usamos Seus Dados
+- Proteção de Dados
+- Direitos do Usuário
+- Conformidade LGPD
+- Conformidade GDPR
+- Contato & Reclamações
+
+---
+
+### 🍪 Página de Política de Cookies
+**Rota**: `/cookies`  
+**Arquivo**: `src/pages/Cookies.jsx`
+
+**Funcionalidades**:
+- Documentação de política de cookies
+- Explicação de consentimento de cookies
+- Tipos de cookies usados (análise, funcional, etc.)
+- Serviços de terceiros que usam cookies
+- Opções de opt-out para usuários
+- Configurações de gerenciamento de cookies
+- Privacidade de dados relacionada a cookies
+
+**Tipos de Cookies Documentados**:
+- Cookies essenciais (funcionalidade do site)
+- Cookies de análise (Google Analytics 4)
+- Cookies de desempenho
+- Cookies funcionais
+
+**Componente Relacionado**:
+- Componente CoockeBanner para consentimento inline
+
+---
+
+### ⚖️ Página de Termos de Serviço
+**Rota**: `/terms`  
+**Arquivo**: `src/pages/Terms.jsx`
+
+**Funcionalidades**:
+- Documento completo de termos e condições
+- Direitos e responsabilidades do usuário
+- Informações sobre propriedade intelectual
+- Limitação de responsabilidade
+- Isenção de garantias
+- Informações sobre disponibilidade do serviço
+- Política de conteúdo
+- Direitos de modificação
+
+**Seções**:
+- Aceitação dos Termos
+- Concessão de Licença
+- Responsabilidades do Usuário
+- Direitos de Propriedade Intelectual
+- Limitação de Responsabilidade
+- Isenções
+- Mudanças nos Termos
+- Informações de Contato
+
+---
+
+### 404 Página Não Encontrada
+**Rota**: `*` (qualquer rota não correspondida)  
+**Arquivo**: `src/pages/NotFound.jsx`
+
+**Funcionalidades**:
+- Página de erro 404 para rotas indefinidas
+- Mensagem de erro amigável
+- Links de navegação de volta para páginas principais
+- Link para página inicial
+- Link para página de projetos
+- Link para página de contato
+- Exibição de erro animada/estilizada
+- Sugestões úteis
+
+---
+
+## 🗺️ Estrutura de Navegação
+
+```
+/                           ← Página Inicial (Padrão)
+├── /projects               ← Galeria de Projetos
+├── /analytics              ← Dashboard de Análises
+├── /resume                 ← Currículo / CV
+├── /contact                ← Formulário de Contato
+├── /privacy                ← Política de Privacidade
+├── /cookies                ← Política de Cookies
+├── /terms                  ← Termos de Serviço
+└── /* (404)                ← Página Não Encontrada
+```
+
+---
+
+## 🔄 Implementação de Roteamento
+
+A aplicação usa **React Router v7** para roteamento no lado do cliente:
+
+```jsx
+// Exemplo de App.jsx
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+<Router>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/projects" element={<Projects />} />
+    <Route path="/analytics" element={<Analytics />} />
+    <Route path="/resume" element={<Resume />} />
+    <Route path="/contact" element={<Contact />} />
+    <Route path="/privacy" element={<Privacy />} />
+    <Route path="/cookies" element={<Cookies />} />
+    <Route path="/terms" element={<Terms />} />
+    <Route path="*" element={<NotFound />} />
+  </Routes>
+</Router>
+```
+
+---
+
+## 🧭 Menu de Navegação
+
+O componente Header (`src/components/Header.jsx`) exibe um menu de navegação com links para:
+- Início
+- Projetos
+- Análises
+- Currículo
+- Contato
+- Toggle de Idioma (PT/EN)
+
+A navegação móvel inclui um menu hambúrguer para telas menores.
+
+---
+
 ## 🌍 Internacionalização (i18n)
 
 ### Idiomas Suportados
-- 🇵🇧 Português (PT) - Padrão
-- 🇺🇸 Inglês (EN)
+- 🇵🇧 Português (PT)
+- 🇺🇸 Inglês (EN) - **Idioma Padrão**
+
+> **Nota**: A lingua padrão do site é **Inglês (EN)**. Os usuários podem alternar para Português usando o toggle de idioma no cabeçalho.
 
 ### Uso
 
@@ -698,6 +981,38 @@ copies or substantial portions of the Software.
 
 ---
 
+## 📝 Changelog
+
+### [1.0.1] - 2026-04-14
+
+#### ✨ Melhorias
+- README.md completamente reformulado e detalhado
+- Adicionada seção de Changelog para rastrear versões
+- Melhorada documentação de componentes com tabelas
+- Adicionado checklist de deployment completo
+
+#### 📚 Documentação
+- Expandida seção de troubleshooting com mais cenários
+- Adicionadas mais exemplos de integração com API
+- Melhorados exemplos de código com comentários
+
+#### 🔧 Técnico
+- Preparação para versionamento semântico
+- Estrutura pronta para futuras releases
+
+### [1.0.0] - 2026-04-13
+
+#### 🎉 Inicial Release
+- Portfólio profissional completo com React 19
+- Suporte multilíngue (PT/EN)
+- Dashboard de análises com gráficos
+- Integração Google Analytics 4
+- Conformidade LGPD/GDPR
+- Design responsivo mobile-first
+- Componentes reutilizáveis
+
+---
+
 ## 🎉 Agradecimentos
 
 - [React](https://react.dev) - Biblioteca incrível
@@ -707,8 +1022,8 @@ copies or substantial portions of the Software.
 
 ---
 
-**Última atualização**: Abril de 2026
-**Versão**: 1.0.0
+**Última atualização**: Abril de 2026  
+**Versão**: 1.0.1  
 **Status**: ✅ Em Produção
 
 ---

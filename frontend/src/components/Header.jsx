@@ -42,13 +42,13 @@ export default function Header() {
           {/* DESKTOP NAV */}
           <nav className="hidden md:flex gap-12 text-cyan-300 text-lg font-medium">
             <Link to="/" className="hover:text-white transition">Home</Link>
-            <Link to="/resume" className="hover:text-white transition">
+            <Link to={`/${lang}/resume`} className="hover:text-white transition">
               {t.resume}
             </Link>
-            <Link to="/projects" className="hover:text-white transition">
+            <Link to={`/${lang}/projects`} className="hover:text-white transition">
               {t.projects}
             </Link>
-            <Link to="/contact" className="hover:text-white transition">
+            <Link to={`/${lang}/contact`} className="hover:text-white transition">
               {t.contact}
             </Link>
           </nav>
@@ -73,9 +73,9 @@ export default function Header() {
         {open && (
           <div className="md:hidden flex flex-col gap-6 px-8 pb-8 text-cyan-300 text-lg border-t border-cyan-900 pt-4">
             <Link to="/" className="hover:text-white" onClick={() => setOpen(false)}>Home</Link>
-            <Link to="/resume" className="hover:text-white" onClick={() => setOpen(false)}>{t.resume}</Link>
-            <Link to="/projects" className="hover:text-white" onClick={() => setOpen(false)}>{t.projects}</Link>
-            <Link to="/contact" className="hover:text-white" onClick={() => setOpen(false)}>{t.contact}</Link>
+            <Link to={`/${lang}/resume`} className="hover:text-white" onClick={() => setOpen(false)}>{t.resume}</Link>
+            <Link to={`/${lang}/projects`} className="hover:text-white" onClick={() => setOpen(false)}>{t.projects}</Link>
+            <Link to={`/${lang}/contact`} className="hover:text-white" onClick={() => setOpen(false)}>{t.contact}</Link>
           </div>
         )}
       </div>

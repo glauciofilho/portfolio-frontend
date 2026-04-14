@@ -1,5 +1,3 @@
-import { data } from "react-router-dom";
-
 export const translations = {
   pt: {
     // Header / Geral
@@ -226,6 +224,13 @@ export const translations = {
     learnMore: "Saiba mais",
     accept: "Aceitar",
     reject: "Rejeitar",
+
+    // NOT FOUND
+    error404: "Erro 404",
+    notFoundTitle: "Página não encontrada.",
+    notFoundDesc: "A rota que você tentou acessar não existe, foi movida ou você não tem permissão de acesso.",
+    goBack: "Voltar",
+    goHome: "Página Inicial",
   },
 
   en: {
@@ -449,5 +454,12 @@ export const translations = {
     learnMore: "Learn more",
     accept: "Accept",
     reject: "Reject",
+
+    // NOT FOUND
+    error404: "Error 404",
+    notFoundTitle: "Page not found.",
+    notFoundDesc: "The route you tried to access does not exist, has been moved, or you do not have permission to access it.",
+    goBack: "Go Back",
+    goHome: "Home Page",
   },
 };

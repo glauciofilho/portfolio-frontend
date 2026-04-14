@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import Cookies from "./pages/Cookies";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import NotFound from "./pages/NotFound";
 
 import { LanguageProvider } from "./context/LanguageContext";
 import { trackPageView } from "./analytics/ga";
@@ -36,14 +37,20 @@ export default function App() {
         <div className="h-28" />
 
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/resume" element={<Resume />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
+          {/* As rotas agora ficam agrupadas dentro de /:lang */}
+          <Route path="/:lang">
+            <Route index element={<Home />} />
+            <Route path="resume" element={<Resume />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="cookies" element={<Cookies />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="terms" element={<Terms />} />
+
+            {/* Rota de segurança: se o usuário digitar uma URL doida, joga pra Home */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Routes>
 
         <CookieBanner />

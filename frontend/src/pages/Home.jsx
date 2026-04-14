@@ -169,7 +169,7 @@ export default function Home() {
               {t.resumeEducation}
             </p>
           </div>
-          <Link to="/resume" className="flex items-center gap-2 text-cyan-600 font-bold hover:gap-4 transition-all">
+          <Link to={`/${lang}/resume`} className="flex items-center gap-2 text-cyan-600 font-bold hover:gap-4 transition-all">
             {t.resume} <ArrowRight size={20} />
           </Link>
         </div>

@@ -2,7 +2,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   return (
     <footer className="bg-cyan-950 text-white rounded-t-3xl mt-32 z-50">
@@ -112,10 +112,10 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/">{t.home}</Link></li>
-              <li><Link to="/resume">{t.resume}</Link></li>
-              <li><Link to="/projects">{t.projects}</Link></li>
-              {/* <li><Link to="/analytics">{t.analytics}</Link></li> */}
-              <li><Link to="/contact">{t.contact}</Link></li>
+              <li><Link to={`/${lang}/resume`}>{t.resume}</Link></li>
+              <li><Link to={`/${lang}/projects`}>{t.projects}</Link></li>
+              {/* <li><Link to={`/${lang}/analytics`}>{t.analytics}</Link></li> */}
+              <li><Link to={`/${lang}/contact`}>{t.contact}</Link></li>
             </ul>
           </div>
 
@@ -164,7 +164,7 @@ export default function Footer() {
           </span>
 
           <span>
-            <Link to="/terms">{t.terms}</Link> | <Link to="/privacy">{t.privacy}</Link> | <Link to="/cookies">{t.cookies}</Link>
+            <Link to={`/${lang}/terms`}>{t.terms}</Link> | <Link to={`/${lang}/privacy`}>{t.privacy}</Link> | <Link to={`/${lang}/cookies`}>{t.cookies}</Link>
           </span>
         </div>
 
