@@ -1,4 +1,5 @@
 import colors from "tailwindcss/colors";
+import typography from "@tailwindcss/typography";
 
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
@@ -6,9 +7,11 @@ export default {
     extend: {
       colors: {
         cyan: colors.cyan,
-        cyan: colors.cyan,
         sky: colors.sky,
       },
     },
   },
+  plugins: [
+    typography,
+  ],
 };
