@@ -4,8 +4,11 @@ import { useLanguage } from "../context/LanguageContext";
 import { getOneProject, getFile, getProjects } from "../services/api";
 import FileTree from "./FileTree";
 
+// Importações para o Markdown
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 export default function VSCodeViewer({ projectId, onClose }) {
-  // 1. Corrigido para setLang (seu Contexto usa setLang)
   const { lang, setLang, t } = useLanguage();
   const [allProjects, setAllProjects] = useState([]);
   const [data, setData] = useState(null);
@@ -13,9 +16,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
   const [activeFile, setActiveFile] = useState(null);
   const [fileContent, setFileContent] = useState(null);
   const [currentProjectId, setCurrentProjectId] = useState(projectId);
-  // Controle da barra lateral para mobile/tablet
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const isOpen = Boolean(projectId);
 
   useEffect(() => {
@@ -86,15 +87,12 @@ export default function VSCodeViewer({ projectId, onClose }) {
   if (!isOpen) return null;
 
   return (
-    // Backdrop com Padding constante (Garante o efeito de "Ilha")
     <div className="fixed inset-0 z-50 bg-[#001a28]/80 backdrop-blur-md flex items-center justify-center p-4 md:p-8">
 
-      {/* CONTAINER DA ILHA */}
       <div className="w-full h-full max-w-7xl bg-[#001a28] rounded-2xl overflow-hidden flex flex-col shadow-2xl border border-white/5 relative">
 
         <div className="flex flex-1 overflow-hidden relative">
 
-          {/* BOTÃO DE SETA (Trigger da Gaveta) - Visível apenas em telas < lg e quando fechado */}
           {!isSidebarOpen && (
             <button
               onClick={() => setIsSidebarOpen(true)}
@@ -104,14 +102,12 @@ export default function VSCodeViewer({ projectId, onClose }) {
             </button>
           )}
 
-          {/* SIDEBAR (ESTILO GAVETA EM TELAS PEQUENAS) */}
           <aside className={`
             absolute lg:relative z-40 h-full w-64 bg-[#0a2f42] border-r border-white/5 flex flex-col shrink-0
             transition-transform duration-300 ease-in-out
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}>
 
-            {/* Header Sidebar com Fechar (Mobile) */}
             <div className="p-4 border-b border-white/5 flex justify-between items-center">
               <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
                 {t.switchproject}
@@ -121,7 +117,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
               </button>
             </div>
 
-            {/* Select de Projetos */}
             <div className="px-4 py-3">
               <select
                 value={currentProjectId}
@@ -134,7 +129,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
               </select>
             </div>
 
-            {/* Explorer com Scroll */}
             <div className="flex-1 overflow-y-auto pt-2 custom-scrollbar">
               <div className="px-4 py-2 text-cyan-300 text-[10px] font-bold tracking-widest uppercase opacity-70">
                 Explorer
@@ -152,7 +146,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
                       onSelectFile={async fileNode => {
                         setActiveFile(fileNode);
                         setFileContent(null);
-                        // No mobile/tablet, fecha a gaveta ao selecionar
                         if (window.innerWidth < 1024) setIsSidebarOpen(false);
                         try {
                           const res = await getFile(data.project.id, fileNode.id, lang);
@@ -165,7 +158,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
               )}
             </div>
 
-            {/* MUDANÇA DE LINGUAGEM (Bottom Left) */}
             <div className="p-4 border-t border-white/5 bg-[#0a2f42]">
               <button
                 onClick={() => setLang(lang === 'en' ? 'pt' : 'en')}
@@ -178,7 +170,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
             </div>
           </aside>
 
-          {/* OVERLAY PARA FECHAR (Mobile) */}
           {isSidebarOpen && (
             <div
               className="absolute inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-[2px]"
@@ -186,9 +177,8 @@ export default function VSCodeViewer({ projectId, onClose }) {
             />
           )}
 
-          {/* ÁREA PRINCIPAL DO EDITOR */}
           <main className="flex-1 flex flex-col relative bg-[#001a28]">
-            <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4">
+            <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4 shrink-0">
               <div className="flex h-full overflow-x-auto no-scrollbar">
                 {activeFile && (
                   <div className="flex items-center px-4 gap-2 bg-[#001a28] border-t-2 border-cyan-300 h-full text-white min-w-max">
@@ -202,13 +192,20 @@ export default function VSCodeViewer({ projectId, onClose }) {
               </button>
             </header>
 
-            <div className="flex-1 relative overflow-hidden bg-[#001a28]">
+            {/* MARRKDOWN VIEWER: Substitui o antigo iframe */}
+            <div className="flex-1 relative overflow-y-auto bg-[#001a28] custom-scrollbar">
               {activeFile ? (
                 fileContent ? (
-                  <iframe title="Code Preview" srcDoc={fileContent} className="w-full h-full bg-white" />
+                  <div className="p-6 md:p-12 w-full flex justify-center">
+                    <div className="prose prose-invert prose-cyan max-w-3xl w-full">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {fileContent}
+                      </ReactMarkdown>
+                    </div>
+                  </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-slate-500 font-mono text-xs">
-                    <RefreshCw className="animate-spin mr-2" size={14} /> Compiling...
+                    <RefreshCw className="animate-spin mr-2" size={14} /> Rendering Markdown...
                   </div>
                 )
               ) : (
