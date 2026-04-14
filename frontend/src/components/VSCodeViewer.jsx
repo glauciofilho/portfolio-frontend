@@ -60,15 +60,20 @@ export default function VSCodeViewer({ projectId, onClose }) {
     return () => controller.abort();
   }, [currentProjectId, lang]);
 
-  const fileTree = useMemo(() => {
+const fileTree = useMemo(() => {
     if (!data?.files) return [];
+
     const root = [];
+
+    // 1. Monta a estrutura básica da árvore (como você já tinha)
     data.files.forEach(file => {
       const parts = file.path.split("/");
       let current = root;
+
       parts.forEach((part, idx) => {
         const isFile = idx === parts.length - 1;
         let existing = current.find(n => n.name === part);
+
         if (!existing) {
           existing = {
             id: isFile ? file.id : `folder-${part}`,
@@ -78,10 +83,29 @@ export default function VSCodeViewer({ projectId, onClose }) {
           };
           current.push(existing);
         }
+
         if (!isFile) current = existing.children;
       });
     });
-    return root;
+
+    const sortNodes = (nodes) => {
+      nodes.sort((a, b) => {
+        if (a.type === "folder" && b.type === "file") return -1;
+        if (a.type === "file" && b.type === "folder") return 1;
+
+        return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+      });
+
+      nodes.forEach(node => {
+        if (node.children) {
+          sortNodes(node.children);
+        }
+      });
+
+      return nodes;
+    };
+
+    return sortNodes(root);
   }, [data]);
 
   if (!isOpen) return null;
