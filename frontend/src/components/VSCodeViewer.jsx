@@ -7,6 +7,7 @@ import FileTree from "./FileTree";
 // Importações para o Markdown
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw"; // 1. Importe o rehype-raw
 
 export default function VSCodeViewer({ projectId, onClose }) {
   const { lang, setLang, t } = useLanguage();
@@ -19,14 +20,12 @@ export default function VSCodeViewer({ projectId, onClose }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const isOpen = Boolean(projectId);
 
-  // Bloqueio de scroll do body
   useEffect(() => {
     if (!isOpen) return;
     document.body.style.overflow = "hidden";
     return () => (document.body.style.overflow = "");
   }, [isOpen]);
 
-  // Carregar lista de todos os projetos (para o seletor lateral)
   useEffect(() => {
     async function fetchAll() {
       try {
@@ -40,7 +39,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
     fetchAll();
   }, [lang]);
 
-  // Carregar dados do projeto e busca automática de README
   useEffect(() => {
     if (!currentProjectId) return;
     const controller = new AbortController();
@@ -50,7 +48,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
         setLoading(true);
         const result = await getOneProject(currentProjectId, lang, controller.signal);
         setData(result);
-
         setActiveFile(null);
         setFileContent(null);
 
@@ -76,20 +73,15 @@ export default function VSCodeViewer({ projectId, onClose }) {
     return () => controller.abort();
   }, [currentProjectId, lang]);
 
-  // Construção da Árvore de Arquivos com Ordenação (Pastas primeiro, depois A-Z)
   const fileTree = useMemo(() => {
     if (!data?.files) return [];
-
     const root = [];
-
     data.files.forEach(file => {
       const parts = file.path.split("/");
       let current = root;
-
       parts.forEach((part, idx) => {
         const isFile = idx === parts.length - 1;
         let existing = current.find(n => n.name === part);
-
         if (!existing) {
           existing = {
             id: isFile ? file.id : `folder-${part}`,
@@ -99,7 +91,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
           };
           current.push(existing);
         }
-
         if (!isFile) current = existing.children;
       });
     });
@@ -110,11 +101,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
         if (a.type === "file" && b.type === "folder") return 1;
         return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
       });
-
-      nodes.forEach(node => {
-        if (node.children) sortNodes(node.children);
-      });
-
+      nodes.forEach(node => { if (node.children) sortNodes(node.children); });
       return nodes;
     };
 
@@ -127,17 +114,15 @@ export default function VSCodeViewer({ projectId, onClose }) {
     <div className="fixed inset-0 z-50 bg-[#001a28]/80 backdrop-blur-md flex items-center justify-center p-4 md:p-8">
       <div className="w-full h-full max-w-7xl bg-[#001a28] rounded-2xl overflow-hidden flex flex-col shadow-2xl border border-white/5 relative">
         <div className="flex flex-1 overflow-hidden relative">
-          {/* Botão lateral Mobile */}
           {!isSidebarOpen && (
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="lg:hidden absolute left-0 top-1/2 -translate-y-1/2 z-40 bg-cyan-600/90 text-white p-2 rounded-r-xl shadow-lg hover:bg-cyan-500 transition-all"
+              className="lg:hidden absolute left-0 top-1/2 -translate-y-1/2 z-40 bg-cyan-600/90 text-white p-2 rounded-r-xl shadow-lg"
             >
               <ChevronRight size={20} />
             </button>
           )}
 
-          {/* Sidebar */}
           <aside className={`
             absolute lg:relative z-40 h-full w-64 bg-[#0a2f42] border-r border-white/5 flex flex-col shrink-0
             transition-transform duration-300 ease-in-out
@@ -147,7 +132,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
               <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
                 {t.switchproject}
               </span>
-              <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
+              <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400">
                 <ChevronLeft size={20} />
               </button>
             </div>
@@ -156,7 +141,7 @@ export default function VSCodeViewer({ projectId, onClose }) {
               <select
                 value={currentProjectId}
                 onChange={(e) => setCurrentProjectId(e.target.value)}
-                className="w-full bg-[#001a28] text-white text-xs border border-white/10 rounded-lg p-2 outline-none cursor-pointer hover:border-cyan-500/50 transition-colors"
+                className="w-full bg-[#001a28] text-white text-xs border border-white/10 rounded-lg p-2 outline-none"
               >
                 {allProjects.map(p => (
                   <option key={p.id} value={p.id}>{p.name}</option>
@@ -205,7 +190,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
             </div>
           </aside>
 
-          {/* Overlay Mobile */}
           {isSidebarOpen && (
             <div
               className="absolute inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-[2px]"
@@ -213,7 +197,6 @@ export default function VSCodeViewer({ projectId, onClose }) {
             />
           )}
 
-          {/* Área Principal */}
           <main className="flex-1 flex flex-col relative bg-[#001a28]">
             <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4 shrink-0">
               <div className="flex h-full overflow-x-auto no-scrollbar">
@@ -232,16 +215,20 @@ export default function VSCodeViewer({ projectId, onClose }) {
             <div className="flex-1 relative overflow-y-auto bg-[#001a28] custom-scrollbar">
               {activeFile ? (
                 fileContent ? (
-                  <div className="p-6 md:p-12 w-full flex justify-center">
-                    <div className="prose prose-invert prose-cyan max-w-3xl w-full">
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  <div className="p-4 md:p-8 w-full flex justify-center h-full">
+                    {/* 2. Adicione o rehypeRaw aqui */}
+                    <div className="prose prose-invert prose-cyan max-w-none w-full h-full">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeRaw]}
+                      >
                         {fileContent}
                       </ReactMarkdown>
                     </div>
                   </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-slate-500 font-mono text-xs">
-                    <RefreshCw className="animate-spin mr-2" size={14} /> Rendering Markdown...
+                    <RefreshCw className="animate-spin mr-2" size={14} /> Rendering Content...
                   </div>
                 )
               ) : (
