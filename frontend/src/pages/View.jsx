@@ -141,8 +141,8 @@ export default function View() {
           {/* Menu acima do seletor de projetos */}
           <div className="p-4 border-b border-white/5 flex flex-col gap-2">
               <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase opacity-70">
-                      Navigation
+                  <span className="px-4 py-2 text-cyan-300 text-[10px] font-bold tracking-widest uppercase opacity-70">
+                      {t.navigation}
                   </span>
                   <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
                       <ChevronLeft size={20} />
@@ -187,7 +187,7 @@ export default function View() {
           </div>
 
           <div className="p-4 border-b border-white/5 flex flex-col gap-1">
-            <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase opacity-70">
+            <span className="px-4 py-2 text-cyan-300 text-[10px] font-bold tracking-widest uppercase opacity-70">
               {t.switchproject}
             </span>
             <select
@@ -212,7 +212,7 @@ export default function View() {
 
           <div className="flex-1 overflow-y-auto pt-2 custom-scrollbar">
             <div className="px-4 py-2 text-cyan-300 text-[10px] font-bold tracking-widest uppercase opacity-70">
-              Explorer
+              {t.explorer}
             </div>
 
             {loading ? (

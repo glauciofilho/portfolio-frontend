@@ -54,11 +54,13 @@ export const translations = {
 
     notfind: "Nenhum projeto encontrado",
 
-    // VSCode Viewer
+    // View
     vscodeLoading: "Carregando projeto...",
     vscodeNoFile: "Selecione um arquivo para visualizar seu conteúdo.",
     switchproject: "Alternar Projeto",
     readyforinspection: "Pronto para Inspeção",
+    navigation: "Navegação",
+    explorer: "Explorador",
 
     // RESUME
     resumeRole:
@@ -267,7 +269,7 @@ export const translations = {
     apiIntegration: "API Integration",
     pythonScripts: "Python Scripts",
 
-      // Projects
+    // Projects
     projectsDescription:
       "Here are some of my recent projects that showcase my skills in data analysis, visualization, and automation.",
     searchProjects: "Search projects...",
@@ -288,11 +290,13 @@ export const translations = {
 
     notfind: "No projects found",
 
-    // VSCode Viewer
+    // View
     vscodeLoading: "Loading project...",
     vscodeNoFile: "Select a file to view its content.",
     readyforinspection: "Ready for Inspection",
     switchproject: "Switch Project",
+    navigation: "Navigation",
+    explorer: "Explorer",
 
     // RESUME
     resumeRole:
