@@ -146,9 +146,9 @@ export default function View() {
           title={isSidebarOpen ? "Close Menu" : "Open Menu"}
         >
           <div className="relative w-[16px] h-[12px] flex flex-col justify-between">
-            <span className={`block w-full h-[2px] bg-current rounded transform transition-all duration-300 ${isSidebarOpen ? 'translate-y-[5px] rotate-45' : ''}`} />
-            <span className={`block w-full h-[2px] bg-current rounded transition-all duration-300 ${isSidebarOpen ? 'opacity-0 translate-x-2' : ''}`} />
-            <span className={`block w-full h-[2px] bg-current rounded transform transition-all duration-300 ${isSidebarOpen ? '-translate-y-[5px] -rotate-45' : ''}`} />
+            <span className={`block w-full h-[2px] bg-current rounded transform transition-all duration-1000 ${isSidebarOpen ? 'translate-y-[5px] rotate-45' : ''}`} />
+            <span className={`block w-full h-[2px] bg-current rounded transition-all duration-1000 ${isSidebarOpen ? 'opacity-0 translate-x-2' : ''}`} />
+            <span className={`block w-full h-[2px] bg-current rounded transform transition-all duration-1000 ${isSidebarOpen ? '-translate-y-[5px] -rotate-45' : ''}`} />
           </div>
         </button>
 
