@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import Cookies from "./pages/Cookies";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import View from "./pages/View";
 import NotFound from "./pages/NotFound";
 
 import { LanguageProvider } from "./context/LanguageContext";
@@ -21,6 +22,7 @@ import { trackPageView } from "./analytics/ga";
 
 export default function App() {
   const location = useLocation();
+  const isViewPage = location.pathname.includes("/view/");
 
   // 🔹 Page view automático
   useEffect(() => {
@@ -31,10 +33,10 @@ export default function App() {
     <LanguageProvider>
       <ScrollToTop />
 
-      <div className="min-h-screen bg-cyan-50 text-cyan-950">
-        <Header />
+      <div className={`min-h-screen ${isViewPage ? "bg-white" : "bg-cyan-50 text-cyan-950"}`}>
+        {!isViewPage && <Header />}
 
-        <div className="h-28" />
+        {!isViewPage && <div className="h-28" />}
 
         <Routes>
           {/* As rotas agora ficam agrupadas dentro de /:lang */}
@@ -47,6 +49,7 @@ export default function App() {
             <Route path="cookies" element={<Cookies />} />
             <Route path="privacy" element={<Privacy />} />
             <Route path="terms" element={<Terms />} />
+            <Route path="view/:projectSlug" element={<View />} />
 
             {/* Rota de segurança: se o usuário digitar uma URL doida, joga pra Home */}
             <Route path="*" element={<NotFound />} />
@@ -55,7 +58,7 @@ export default function App() {
 
         <CookieBanner />
 
-        <Footer />
+        {!isViewPage && <Footer />}
       </div>
     </LanguageProvider>
   );

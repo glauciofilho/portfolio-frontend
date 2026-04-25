@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { getProjects } from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
 import { trackEvent } from "../analytics/ga";
@@ -7,14 +8,14 @@ import ProjectCard from "../components/ProjectCard";
 import StackFilter from "../components/StackFilter";
 import SortSelect from "../components/SortSelect";
 import ViewToggle from "../components/ViewToggle";
-import VSCodeViewer from "../components/VSCodeViewer";
+import { slugify } from "../utils/slugify";
 
 export default function Projects() {
   const { lang, t } = useLanguage();
+  const navigate = useNavigate();
 
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedStacks, setSelectedStacks] = useState([]);
   const [sortBy, setSortBy] = useState("date_desc");
@@ -153,7 +154,7 @@ export default function Projects() {
                     project_name: p.name,
                     languageCode: lang,
                   });
-                  setSelectedProjectId(p.id);
+                  navigate(`/${lang}/view/${slugify(p.name)}`);
                 }}
               />
             ))}
@@ -174,14 +175,6 @@ export default function Projects() {
           </div>
         )}
       </main>
-
-      {/* MODAL / VIEWER EM TELA CHEIA */}
-      {selectedProjectId && (
-        <VSCodeViewer
-          projectId={selectedProjectId}
-          onClose={() => setSelectedProjectId(null)}
-        />
-      )}
     </>
   );
 }

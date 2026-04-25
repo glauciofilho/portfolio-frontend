@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getProjects } from "../services/api";
 import ProjectCard from "../components/ProjectCard";
+import { slugify } from "../utils/slugify";
+import { trackEvent } from "../analytics/ga";
 import { CheckCircle2, Github, Linkedin, Mail, Database, BarChart3, Zap, GraduationCap, ArrowRight, MessageCircle, LayoutGrid } from "lucide-react";
 
 export default function Home() {
   const { lang, t } = useLanguage();
+  const navigate = useNavigate();
   const [latestProjects, setLatestProjects] = useState([]);
 
   useEffect(() => {
@@ -98,7 +101,18 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
           {latestProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard 
+              key={project.id} 
+              project={project} 
+              onClick={() => {
+                trackEvent("open_project", {
+                  project_id: project.id,
+                  project_name: project.name,
+                  languageCode: lang,
+                });
+                navigate(`/${lang}/view/${slugify(project.name)}`);
+              }}
+            />
           ))}
         </div>
 
