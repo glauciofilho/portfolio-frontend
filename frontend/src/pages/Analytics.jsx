@@ -1,12 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import {
-  getProjects,
-  getAnalyticsOverview,
-  getAnalyticsCountries,
-  getAnalyticsProjects,
-} from "../services/api";
 import { trackEvent } from "../analytics/ga";
+import { useAnalytics } from "../hooks/useAnalytics";
 
 import StatCard from "../components/analytics/StatCard";
 import ProjectsTimelineChart from "../components/analytics/ProjectsTimelineChart";
@@ -17,51 +12,18 @@ import Ranking from "../components/analytics/Ranking";
 export default function Analytics() {
   const { t, lang } = useLanguage();
 
-  const [projects, setProjects] = useState([]);
-  const [overview, setOverview] = useState(null);
-  const [countries, setCountries] = useState([]);
-  const [ranking, setRanking] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    projects,
+    overview,
+    countries,
+    ranking,
+    loading,
+    totalStacks
+  } = useAnalytics(lang);
 
   useEffect(() => {
     trackEvent("view_analytics");
-
-    async function load() {
-      try {
-        setLoading(true);
-
-        const [
-          projectsData,
-          overviewData,
-          countriesData,
-          rankingData,
-        ] = await Promise.all([
-          getProjects(),
-          getAnalyticsOverview(),
-          getAnalyticsCountries(),
-          getAnalyticsProjects(),
-        ]);
-
-        setProjects(projectsData);
-        setOverview(overviewData);
-        setCountries(countriesData);
-        setRanking(rankingData);
-
-      } catch (err) {
-        console.error("Analytics error:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    load();
   }, [lang]);
-
-  const totalStacks = useMemo(() => {
-    return new Set(
-      projects.flatMap(p => p.stacks.map(s => s.name))
-    ).size;
-  }, [projects]);
 
   if (loading) {
     return (
