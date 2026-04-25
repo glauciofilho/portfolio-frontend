@@ -10,7 +10,8 @@ import {
   Globe, 
   Home,
   LayoutGrid,
-  Mail
+  Mail,
+  Menu
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { getOneProject, getFile, getProjects } from "../services/api";
@@ -144,9 +145,6 @@ export default function View() {
                   <span className="px-4 py-2 text-cyan-300 text-[10px] font-bold tracking-widest uppercase opacity-70">
                       {t.navigation}
                   </span>
-                  <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
-                      <ChevronLeft size={20} />
-                  </button>
               </div>
               <div className="grid grid-cols-1 gap-2 justify-center">
                   <Link 
@@ -242,17 +240,17 @@ export default function View() {
 
         {/* Main Content */}
         <main className="flex-1 flex flex-col relative bg-[#001a28] min-w-0">
-          {!isSidebarOpen && (
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-40 bg-cyan-600/90 text-white p-2 rounded-r-xl shadow-lg"
-            >
-              <ChevronRight size={20} />
-            </button>
-          )}
+          <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4 shrink-0 overflow-hidden">
+            <div className="flex h-full items-center overflow-x-auto no-scrollbar">
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="h-full px-3 text-cyan-400 hover:bg-[#001a28] transition-colors border-r border-white/5"
+                title={isSidebarOpen ? "Close Menu" : "Open Menu"}
+              >
+                {isSidebarOpen ? <X size={18} /> : <Menu size={18} />}
+              </button>
 
-          <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4 shrink-0">
-            <div className="flex h-full overflow-x-auto no-scrollbar">
               {activeFile && (
                 <div className="flex items-center px-4 gap-2 bg-[#001a28] border-t-2 border-cyan-300 h-full text-white min-w-max">
                   <FileCode size={14} className="text-cyan-400" />
@@ -261,7 +259,7 @@ export default function View() {
               )}
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 ml-4">
               {data?.project && (
                   <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hidden md:block">
                       {data.project.name}
