@@ -155,7 +155,7 @@ export default function View() {
         {/* Sidebar */}
         <aside className={`
           absolute lg:relative z-40 h-full w-72 bg-[#0a2f42] border-r border-white/5 flex flex-col shrink-0
-          transition-transform duration-300 ease-in-out
+          transition-transform duration-1000 ease-in-out
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0 lg:w-0 lg:overflow-hidden'}
         `}>
           {/* Menu acima do seletor de projetos */}
