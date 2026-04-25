@@ -201,10 +201,10 @@ export default function View() {
                 backgroundSize: '1rem',
               }}
             >
-              <option value="" disabled>Select a project</option>
+              <option value="" disabled>{t.switchproject}</option>
               {allProjects.map(p => (
-                <option key={p.id} value={p.id}>
-                  {p.name.length > 25 ? p.name.substring(0, 25) + "..." : p.name}
+                <option key={p.id} value={p.id} className="bg-[#0a2f42] text-white">
+                  {p.name}
                 </option>
               ))}
             </select>
