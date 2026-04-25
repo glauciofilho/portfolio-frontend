@@ -9,7 +9,8 @@ import {
   FileCode, 
   Globe, 
   Home,
-  LayoutGrid
+  LayoutGrid,
+  Mail
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { getOneProject, getFile, getProjects } from "../services/api";
@@ -32,7 +33,6 @@ export default function View() {
   const [currentProjectId, setCurrentProjectId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  // Fetch all projects to find the ID from slug
   useEffect(() => {
     async function fetchAll() {
       try {
@@ -43,10 +43,6 @@ export default function View() {
         const match = sorted.find(p => slugify(p.name) === projectSlug);
         if (match) {
           setCurrentProjectId(match.id);
-        } else if (sorted.length > 0 && !projectSlug) {
-          // If no slug, or invalid slug, redirect to first project if possible
-          // or just show empty state. 
-          // For now let's just use the match.
         }
       } catch (err) {
         console.error("Erro ao carregar lista de projetos", err);
@@ -133,167 +129,181 @@ export default function View() {
   };
 
   return (
-    <div className="flex h-screen w-full bg-cyan-50 text-cyan-950 overflow-hidden">
-      {/* Sidebar */}
-      <aside className={`
-        fixed lg:relative z-40 h-full w-72 bg-white border-r border-cyan-100 flex flex-col shrink-0
-        transition-transform duration-300 ease-in-out
-        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:hidden'}
-      `}>
-        {/* Menu acima do seletor de projetos */}
-        <div className="p-4 border-b border-cyan-100 flex flex-col gap-2">
-            <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold tracking-widest text-cyan-700 uppercase">
-                    Navigation
-                </span>
-                <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-cyan-600">
-                    <ChevronLeft size={20} />
-                </button>
-            </div>
-            <div className="flex gap-2">
-                <Link 
-                    to={`/${lang}`} 
-                    className="p-2 bg-white border border-cyan-100 rounded-lg text-cyan-600 hover:bg-cyan-100 transition-colors"
-                    title="Home"
-                >
-                    <Home size={18} />
-                </Link>
-                <Link 
-                    to={`/${lang}/projects`} 
-                    className="p-2 bg-white border border-cyan-100 rounded-lg text-cyan-600 hover:bg-cyan-100 transition-colors"
-                    title="Projects"
-                >
-                    <LayoutGrid size={18} />
-                </Link>
-                <button
-                    onClick={() => setLang(lang === 'en' ? 'pt' : 'en')}
-                    className="flex-1 flex items-center justify-center gap-2 p-2 bg-white border border-cyan-100 rounded-lg text-cyan-600 hover:bg-cyan-100 transition-colors text-xs font-bold"
-                >
-                    <Globe size={16} />
-                    <span>{lang.toUpperCase()}</span>
-                </button>
-            </div>
-        </div>
-
-        <div className="p-4 border-b border-cyan-100 flex flex-col gap-1">
-          <span className="text-[10px] font-bold tracking-widest text-cyan-700 uppercase">
-            {t.switchproject}
-          </span>
-          <select
-            value={currentProjectId || ""}
-            onChange={handleProjectChange}
-            className="w-full bg-white text-cyan-900 text-sm border border-cyan-200 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-cyan-500/20"
-          >
-            <option value="" disabled>Select a project</option>
-            {allProjects.map(p => (
-              <option key={p.id} value={p.id}>{p.name}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="flex-1 overflow-y-auto pt-2 custom-scrollbar">
-          <div className="px-4 py-2 text-cyan-800 text-[10px] font-bold tracking-widest uppercase opacity-70">
-            Explorer
-          </div>
-
-          {loading ? (
-            <div className="px-6 py-4 text-cyan-400 text-xs animate-pulse">Loading...</div>
-          ) : (
-            <div className="pl-2">
-              {fileTree.map(node => (
-                <FileTree
-                  key={node.id}
-                  node={node}
-                  activeFileId={activeFile?.id}
-                  onSelectFile={async fileNode => {
-                    setActiveFile(fileNode);
-                    setFileContent(null);
-                    if (window.innerWidth < 1024) setIsSidebarOpen(false);
-                    try {
-                      const res = await getFile(data.project.id, fileNode.id, lang);
-                      setFileContent(res.content);
-                    } catch (err) { console.error(err); }
-                  }}
-                  // Note: Customizing FileTree colors might require props or global CSS changes if it uses hardcoded dark colors
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col relative bg-cyan-50 min-w-0">
-        {!isSidebarOpen && (
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="absolute left-0 top-4 z-40 bg-cyan-600 text-white p-2 rounded-r-xl shadow-lg lg:flex items-center gap-2"
-          >
-            <ChevronRight size={20} />
-            <span className="hidden lg:inline text-xs font-bold uppercase tracking-wider pr-1">Explorer</span>
-          </button>
-        )}
-
-        <header className="flex bg-white h-12 border-b border-cyan-100 items-center justify-between pr-4 shrink-0">
-          <div className="flex h-full overflow-x-auto no-scrollbar">
-            {activeFile && (
-              <div className="flex items-center px-4 gap-2 bg-cyan-50 border-b-2 border-cyan-500 h-full text-cyan-900 min-w-max">
-                <FileCode size={14} className="text-cyan-600" />
-                <span className="text-xs font-bold">{activeFile.name}</span>
+    <div className="h-screen w-full bg-[#001a28]/95 p-4 md:p-8 flex items-center justify-center overflow-hidden">
+      <div className="w-full h-full max-w-screen-2xl bg-[#001a28] rounded-2xl overflow-hidden flex shadow-2xl border border-white/5 relative">
+        {/* Sidebar */}
+        <aside className={`
+          absolute lg:relative z-40 h-full w-72 bg-[#0a2f42] border-r border-white/5 flex flex-col shrink-0
+          transition-transform duration-300 ease-in-out
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0 lg:w-0 lg:overflow-hidden'}
+        `}>
+          {/* Menu acima do seletor de projetos */}
+          <div className="p-4 border-b border-white/5 flex flex-col gap-2">
+              <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase opacity-70">
+                      Navigation
+                  </span>
+                  <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
+                      <ChevronLeft size={20} />
+                  </button>
               </div>
-            )}
-          </div>
-          
-          <div className="flex items-center gap-4">
-            {data?.project && (
-                <h2 className="text-xs font-bold text-cyan-800 uppercase tracking-widest hidden md:block">
-                    {data.project.name}
-                </h2>
-            )}
-            <button 
-                onClick={() => navigate(`/${lang}/projects`)} 
-                className="text-cyan-400 hover:text-cyan-600 transition-colors p-1"
-                title="Close and return to projects"
-            >
-                <X size={20} />
-            </button>
-          </div>
-        </header>
-
-        <div className="flex-1 relative overflow-y-auto bg-white custom-scrollbar mt-4 mx-4 mb-4 rounded-xl border border-cyan-100 shadow-sm">
-          {activeFile ? (
-            fileContent ? (
-              <div className="p-4 md:p-8 w-full flex justify-center h-full">
-                <div className="prose prose-cyan max-w-none w-full h-full text-cyan-950">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeRaw]}
+              <div className="grid grid-cols-2 gap-2">
+                  <Link 
+                      to={`/${lang}`} 
+                      className="flex items-center gap-2 p-2 bg-[#001a28] border border-white/5 rounded-lg text-cyan-300 hover:text-white transition-colors text-xs font-bold"
                   >
-                    {fileContent}
-                  </ReactMarkdown>
-                </div>
+                      <Home size={14} />
+                      <span>Home</span>
+                  </Link>
+                  <Link 
+                      to={`/${lang}/resume`} 
+                      className="flex items-center gap-2 p-2 bg-[#001a28] border border-white/5 rounded-lg text-cyan-300 hover:text-white transition-colors text-xs font-bold"
+                  >
+                      <FileCode size={14} />
+                      <span>{t.resume}</span>
+                  </Link>
+                  <Link 
+                      to={`/${lang}/projects`} 
+                      className="flex items-center gap-2 p-2 bg-[#001a28] border border-white/5 rounded-lg text-cyan-300 hover:text-white transition-colors text-xs font-bold"
+                  >
+                      <LayoutGrid size={14} />
+                      <span>{t.projects}</span>
+                  </Link>
+                  <Link 
+                      to={`/${lang}/contact`} 
+                      className="flex items-center gap-2 p-2 bg-[#001a28] border border-white/5 rounded-lg text-cyan-300 hover:text-white transition-colors text-xs font-bold"
+                  >
+                      <Mail size={14} />
+                      <span>{t.contact}</span>
+                  </Link>
+                  <button
+                      onClick={() => setLang(lang === 'en' ? 'pt' : 'en')}
+                      className="col-span-2 flex items-center justify-center gap-2 p-2 bg-[#001a28] border border-white/5 rounded-lg text-cyan-400 hover:text-cyan-300 transition-colors text-xs font-bold"
+                  >
+                      <Globe size={14} />
+                      <span>{lang === 'en' ? 'Português' : 'English'}</span>
+                  </button>
               </div>
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-cyan-400 font-mono text-xs">
-                <RefreshCw className="animate-spin mr-2" size={14} /> Rendering Content...
-              </div>
-            )
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center text-cyan-200 gap-4 select-none">
-              <Terminal size={64} />
-              <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan-400 font-bold">{t.readyforinspection}</p>
+          </div>
+
+          <div className="p-4 border-b border-white/5 flex flex-col gap-1">
+            <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase opacity-70">
+              {t.switchproject}
+            </span>
+            <select
+              value={currentProjectId || ""}
+              onChange={handleProjectChange}
+              className="w-full bg-[#001a28] text-white text-xs border border-white/10 rounded-lg p-2 outline-none"
+            >
+              <option value="" disabled>Select a project</option>
+              {allProjects.map(p => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex-1 overflow-y-auto pt-2 custom-scrollbar">
+            <div className="px-4 py-2 text-cyan-300 text-[10px] font-bold tracking-widest uppercase opacity-70">
+              Explorer
             </div>
+
+            {loading ? (
+              <div className="px-6 py-4 text-slate-500 text-xs animate-pulse">Loading...</div>
+            ) : (
+              <div className="pl-2">
+                {fileTree.map(node => (
+                  <FileTree
+                    key={node.id}
+                    node={node}
+                    activeFileId={activeFile?.id}
+                    onSelectFile={async fileNode => {
+                      setActiveFile(fileNode);
+                      setFileContent(null);
+                      if (window.innerWidth < 1024) setIsSidebarOpen(false);
+                      try {
+                        const res = await getFile(data.project.id, fileNode.id, lang);
+                        setFileContent(res.content);
+                      } catch (err) { console.error(err); }
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 flex flex-col relative bg-[#001a28] min-w-0">
+          {!isSidebarOpen && (
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-40 bg-cyan-600/90 text-white p-2 rounded-r-xl shadow-lg"
+            >
+              <ChevronRight size={20} />
+            </button>
           )}
-        </div>
-      </main>
-      
-      {/* Mobile Sidebar Overlay */}
-      {isSidebarOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-cyan-950/20 z-30 backdrop-blur-[2px]"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
+
+          <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4 shrink-0">
+            <div className="flex h-full overflow-x-auto no-scrollbar">
+              {activeFile && (
+                <div className="flex items-center px-4 gap-2 bg-[#001a28] border-t-2 border-cyan-300 h-full text-white min-w-max">
+                  <FileCode size={14} className="text-cyan-400" />
+                  <span className="text-xs font-medium">{activeFile.name}</span>
+                </div>
+              )}
+            </div>
+            
+            <div className="flex items-center gap-4">
+              {data?.project && (
+                  <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hidden md:block">
+                      {data.project.name}
+                  </h2>
+              )}
+              <button 
+                  onClick={() => navigate(`/${lang}/projects`)} 
+                  className="text-slate-400 hover:text-white transition-colors p-1"
+                  title="Close"
+              >
+                  <X size={20} />
+              </button>
+            </div>
+          </header>
+
+          <div className="flex-1 relative overflow-y-auto bg-[#001a28] custom-scrollbar">
+            {activeFile ? (
+              fileContent ? (
+                <div className="p-4 md:p-8 w-full flex justify-center h-full">
+                  <div className="prose prose-invert prose-cyan max-w-none w-full h-full">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
+                    >
+                      {fileContent}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-slate-500 font-mono text-xs">
+                  <RefreshCw className="animate-spin mr-2" size={14} /> Rendering...
+                </div>
+              )
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center text-slate-600 gap-4 opacity-30 select-none">
+                <Terminal size={64} />
+                <p className="font-mono text-xs tracking-[0.2em] uppercase">{t.readyforinspection}</p>
+              </div>
+            )}
+          </div>
+        </main>
+        
+        {/* Mobile Sidebar Overlay */}
+        {isSidebarOpen && (
+          <div
+            className="lg:hidden absolute inset-0 bg-black/60 z-30 backdrop-blur-[2px]"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+      </div>
     </div>
   );
 }

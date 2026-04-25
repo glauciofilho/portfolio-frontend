@@ -20,8 +20,8 @@ export default function FileTree({ node, level = 0, onSelectFile, activeFileId }
     <div>
       <div
         onClick={handleClick}
-        className={`flex items-center gap-1 py-[2px] cursor-pointer select-none hover:bg-cyan-100 transition-colors
-          ${!isFolder && activeFileId === node.id ? "bg-cyan-200 text-cyan-900 font-bold" : "text-cyan-800"}
+        className={`flex items-center gap-1 py-[2px] cursor-pointer select-none hover:bg-[#2a2d2e] transition-colors
+          ${!isFolder && activeFileId === node.id ? "bg-[#37373d] text-white" : "text-[#cccccc]"}
         `}
         style={{ paddingLeft }}
       >
