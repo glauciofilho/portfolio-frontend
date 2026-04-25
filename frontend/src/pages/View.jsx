@@ -160,7 +160,7 @@ export default function View() {
           <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4 shrink-0 overflow-hidden">
             <div className="flex h-full items-center overflow-x-auto no-scrollbar">
               {/* Spacer for absolute toggle button when closed */}
-              <div className={`shrink-0 transition-all duration-300 ${isSidebarOpen ? 'w-0 border-transparent' : 'w-10 border-r border-white/5'}`} />
+              <div className={`shrink-0 transition-all duration-1000 ${isSidebarOpen ? 'w-0 border-transparent' : 'w-10 border-r border-white/5'}`} />
 
               {activeFile && (
                 <div className="flex items-center px-4 gap-2 bg-[#001a28] border-t-2 border-cyan-300 h-full text-white min-w-max">
