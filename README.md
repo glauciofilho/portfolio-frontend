@@ -38,7 +38,7 @@ This portfolio is a modern web application that features:
 
 - **Interactive Homepage**: Landing page with professional presentation and highlighted sections
 - **Project Gallery**: Showcase of projects with technology filters
-- **Code Viewer**: VS Code Viewer integration to display project files
+- **Project View**: Dedicated page with a VS Code-like interface to explore project files and documentation
 - **Analytics Dashboard**: Charts, statistics, and real-time performance metrics
 - **Online Resume**: Professional experience, education, and technical skills
 - **Multi-language Support**: Interface available in Portuguese and English
@@ -69,8 +69,9 @@ This portfolio is a modern web application that features:
 - **Advanced Filters**: Filter by technology, date, type
 - **Sorting**: Sort by date, popularity, name
 - **View Toggle**: Grid or list view
-- **File Viewer**: Tree view to explore project structure
-- **VS Code Integration**: Display project files with syntax highlighting
+- **Project View**: Dedicated page to explore project structures and code
+- **VS Code Interface**: Responsive side menu for navigation and file explorer
+- **Markdown Support**: Render README files and documentation with full styling
 
 ### 📊 Analytics
 - **Visitor Map**: Geographic visualization of access by country
@@ -254,7 +255,6 @@ frontend/
 │   │   ├── SortSelect.jsx           # Sort selector
 │   │   ├── StackFilter.jsx          # Technology filter
 │   │   ├── ViewToggle.tsx           # Grid/list toggle (TypeScript)
-│   │   ├── VSCodeViewer.jsx         # VS Code viewer
 │   │   │
 │   │   └── analytics/               # Dashboard components
 │   │       ├── CountriesMap.jsx     # Visitor countries map
@@ -269,6 +269,7 @@ frontend/
 │   ├── pages/                       # Application pages
 │   │   ├── Home.jsx                 # Home page
 │   │   ├── Projects.jsx             # Projects page
+│   │   ├── View.jsx                 # Project code viewer page
 │   │   ├── Analytics.jsx            # Analytics dashboard
 │   │   ├── Resume.jsx               # Resume page
 │   │   ├── Contact.jsx              # Contact page
@@ -353,8 +354,7 @@ trackEvent('filter_applied', { stack: 'React' });
 | **StackFilter** | Technology filter | `stacks`, `selected`, `onChange` |
 | **SortSelect** | Sort selector | `value`, `onChange` |
 | **ViewToggle** | Grid/list toggle | `isGrid`, `onChange` |
-| **FileTree** | File structure viewer | `files`, `projectId` |
-| **VSCodeViewer** | Code display with syntax | `code`, `language` |
+| **FileTree** | File structure viewer | `node`, `onSelectFile`, `activeFileId` |
 
 ### Analytics
 

@@ -15,6 +15,7 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 import { getOneProject, getFile, getProjects } from "../services/api";
 import FileTree from "../components/FileTree";
+import LanguageSwitch from "../components/LanguageSwitch";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -153,7 +154,7 @@ export default function View() {
                       className="flex items-center gap-2 p-2 bg-[#001a28] border border-white/5 rounded-lg text-cyan-300 hover:text-white transition-colors text-xs font-bold"
                   >
                       <Home size={14} />
-                      <span>Home</span>
+                      <span>{t.home}</span>
                   </Link>
                   <Link 
                       to={`/${lang}/resume`} 
@@ -176,13 +177,12 @@ export default function View() {
                       <Mail size={14} />
                       <span>{t.contact}</span>
                   </Link>
-                  <button
-                      onClick={() => setLang(lang === 'en' ? 'pt' : 'en')}
-                      className="col-span-2 flex items-center justify-center gap-2 p-2 bg-[#001a28] border border-white/5 rounded-lg text-cyan-400 hover:text-cyan-300 transition-colors text-xs font-bold"
-                  >
-                      <Globe size={14} />
-                      <span>{lang === 'en' ? 'Português' : 'English'}</span>
-                  </button>
+                  <div className="flex justify-center mt-2">
+                    <LanguageSwitch
+                        lang={lang}
+                        onToggle={() => setLang(lang === 'en' ? 'pt' : 'en')}
+                    />
+                  </div>
               </div>
           </div>
 

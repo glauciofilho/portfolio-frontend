@@ -41,7 +41,7 @@ export default function Header() {
 
           {/* DESKTOP NAV */}
           <nav className="hidden md:flex gap-12 text-cyan-300 text-lg font-medium">
-            <Link to="/" className="hover:text-white transition">Home</Link>
+            <Link to="/" className="hover:text-white transition">{t.home}</Link>
             <Link to={`/${lang}/resume`} className="hover:text-white transition">
               {t.resume}
             </Link>

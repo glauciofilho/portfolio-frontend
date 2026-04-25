@@ -37,7 +37,7 @@ Este portfólio é uma aplicação web moderna que apresenta:
 
 - **Homepage Interativa**: Landing page com apresentação profissional e seções destacadas
 - **Galeria de Projetos**: Showcase de projetos com filtros por tecnologia
-- **Visualizador de Código**: Integração com VS Code Viewer para exibir arquivos de projeto
+- **Visualização de Projeto**: Página dedicada com interface estilo VS Code para explorar arquivos e documentação do projeto
 - **Dashboard de Análises**: Gráficos, estatísticas e métricas de desempenho em tempo real
 - **Currículo Online**: Experiência profissional, educação e habilidades técnicas
 - **Suporte Multilíngue**: Interface disponível em Português e Inglês
@@ -68,8 +68,9 @@ Este portfólio é uma aplicação web moderna que apresenta:
 - **Filtros Avançados**: Filtrar por tecnologia, data, tipo
 - **Ordenação**: Organizar por data, popularidade, nome
 - **Alternância de Visualização**: Grid ou lista
-- **Visualizador de Arquivos**: Tree view para explorar estrutura do projeto
-- **Integração VS Code**: Exibir arquivos do projeto com syntax highlighting
+- **Visualização de Projeto**: Página dedicada para explorar a estrutura e o código dos projetos
+- **Interface VS Code**: Menu lateral responsivo para navegação e explorador de arquivos
+- **Suporte a Markdown**: Renderização de arquivos README e documentação com estilo completo
 
 ### 📊 Análises
 - **Mapa de Visitantes**: Visualização geográfica de acessos por país
@@ -253,7 +254,6 @@ frontend/
 │   │   ├── SortSelect.jsx           # Seletor de ordenação
 │   │   ├── StackFilter.jsx          # Filtro por tecnologia
 │   │   ├── ViewToggle.tsx           # Toggle grid/lista (TypeScript)
-│   │   ├── VSCodeViewer.jsx         # Visualizador de VS Code
 │   │   │
 │   │   └── analytics/               # Componentes de dashboard
 │   │       ├── CountriesMap.jsx     # Mapa de países com visitantes
@@ -268,6 +268,7 @@ frontend/
 │   ├── pages/                       # Páginas da aplicação
 │   │   ├── Home.jsx                 # Página inicial
 │   │   ├── Projects.jsx             # Página de projetos
+│   │   ├── View.jsx                 # Página de visualização de código do projeto
 │   │   ├── Analytics.jsx            # Dashboard de análises
 │   │   ├── Resume.jsx               # Página de currículo
 │   │   ├── Contact.jsx              # Página de contato
@@ -352,8 +353,7 @@ trackEvent('filter_applied', { stack: 'React' });
 | **StackFilter** | Filtro por tecnologia | `stacks`, `selected`, `onChange` |
 | **SortSelect** | Seletor de ordenação | `value`, `onChange` |
 | **ViewToggle** | Toggle grid/lista | `isGrid`, `onChange` |
-| **FileTree** | Visualizador de arquivos | `files`, `projectId` |
-| **VSCodeViewer** | Display de código com syntax | `code`, `language` |
+| **FileTree** | Visualizador de arquivos | `node`, `onSelectFile`, `activeFileId` |
 
 ### Analytics
 
