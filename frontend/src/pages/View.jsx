@@ -137,7 +137,7 @@ export default function View() {
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           className={`
-            absolute z-50 flex items-center justify-center text-cyan-400 hover:text-white transition-all duration-300 ease-in-out
+            absolute z-50 flex items-center justify-center text-cyan-400 hover:text-white transition-all duration-1000 ease-in-out
             ${isSidebarOpen 
               ? 'top-[14px] left-[240px] w-8 h-8 bg-transparent rounded-lg hover:bg-white/5' 
               : 'top-0 left-0 w-10 h-10 hover:bg-[#001a28] border-r border-white/5'
