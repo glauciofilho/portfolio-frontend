@@ -133,6 +133,25 @@ export default function View() {
   return (
     <div className="h-screen w-full bg-[#001a28]/95 p-4 md:p-8 flex items-center justify-center overflow-hidden">
       <div className="w-full h-full max-w-screen-2xl bg-[#001a28] rounded-2xl overflow-hidden flex shadow-2xl border border-white/5 relative">
+        {/* Animated Morphing Toggle */}
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className={`
+            absolute z-50 flex items-center justify-center text-cyan-400 hover:text-white transition-all duration-300 ease-in-out
+            ${isSidebarOpen 
+              ? 'top-[14px] left-[240px] w-8 h-8 bg-transparent rounded-lg hover:bg-white/5' 
+              : 'top-0 left-0 w-10 h-10 hover:bg-[#001a28] border-r border-white/5'
+            }
+          `}
+          title={isSidebarOpen ? "Close Menu" : "Open Menu"}
+        >
+          <div className="relative w-[16px] h-[12px] flex flex-col justify-between">
+            <span className={`block w-full h-[2px] bg-current rounded transform transition-all duration-300 ${isSidebarOpen ? 'translate-y-[5px] rotate-45' : ''}`} />
+            <span className={`block w-full h-[2px] bg-current rounded transition-all duration-300 ${isSidebarOpen ? 'opacity-0 translate-x-2' : ''}`} />
+            <span className={`block w-full h-[2px] bg-current rounded transform transition-all duration-300 ${isSidebarOpen ? '-translate-y-[5px] -rotate-45' : ''}`} />
+          </div>
+        </button>
+
         {/* Sidebar */}
         <aside className={`
           absolute lg:relative z-40 h-full w-72 bg-[#0a2f42] border-r border-white/5 flex flex-col shrink-0
@@ -242,14 +261,8 @@ export default function View() {
         <main className="flex-1 flex flex-col relative bg-[#001a28] min-w-0">
           <header className="flex bg-[#0a2f42] h-10 border-b border-white/5 items-center justify-between pr-4 shrink-0 overflow-hidden">
             <div className="flex h-full items-center overflow-x-auto no-scrollbar">
-              {/* Mobile Menu Toggle */}
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="h-full px-3 text-cyan-400 hover:bg-[#001a28] transition-colors border-r border-white/5"
-                title={isSidebarOpen ? "Close Menu" : "Open Menu"}
-              >
-                {isSidebarOpen ? <X size={18} /> : <Menu size={18} />}
-              </button>
+              {/* Spacer for absolute toggle button when closed */}
+              <div className={`shrink-0 transition-all duration-300 ${isSidebarOpen ? 'w-0 border-transparent' : 'w-10 border-r border-white/5'}`} />
 
               {activeFile && (
                 <div className="flex items-center px-4 gap-2 bg-[#001a28] border-t-2 border-cyan-300 h-full text-white min-w-max">
