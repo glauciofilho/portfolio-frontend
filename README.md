@@ -108,10 +108,11 @@ This portfolio is a modern web application that features:
 - **React Simple Maps 1.2.1** - Geographic visualization
 - **Lucide React 0.562.0** - SVG icons
 
-### Development
+### Development & Testing
 - **ESLint 9.39.1** - Code linting
 - **PostCSS 8.5.6** - CSS transformations
 - **Autoprefixer 10.4.23** - Automatic CSS prefixes
+- **Vitest & React Testing Library** - Component and hook unit testing
 - **TypeScript** - In transition (ViewToggle.tsx)
 
 ### Infrastructure
@@ -297,9 +298,16 @@ frontend/
 
 ## 🏗️ Architecture
 
+### Clean Architecture Implementation
+
+The application leverages a Clean Architecture approach tailored for React:
+- **Presentation Layer (Components/Pages)**: Focused purely on UI and layout, using Tailwind CSS and components.
+- **Application Layer (Custom Hooks)**: Hooks like `useProjects`, `useProjectViewer`, and `useFetch` handle all business logic, filtering, sorting, and state management.
+- **Infrastructure Layer (Services)**: The `apiClient.js` fetcher abstracts network requests, JSON parsing, and HTTP error handling.
+
 ### Data Flow
 
-```
+```text
 Browser
     ↓
 App.jsx (routing with React Router)
@@ -309,13 +317,13 @@ App.jsx (routing with React Router)
 │ AnalyticsProvider (Google Analytics 4)      │
 └─────────────────────────────────────────────┘
     ↓
-Pages (Home, Projects, Analytics, etc)
-    ├→ Components (Header, Footer, etc)
-    └→ useLanguage() & tracking
+Pages (UI focused, e.g., Projects.jsx)
+    ├→ Custom Hooks (Logic & State, e.g., useProjects)
+    └→ Components (ProjectCard, Header, etc)
          ↓
-    API Service (backend)
+    API Service (Infrastructure layer)
          ↓
-    Backend API (Django/FastAPI)
+    Backend API
 ```
 
 ### Contexts

@@ -175,7 +175,7 @@ export default function Resume() {
               </div>
             </div>
             <div className="flex-1 bg-slate-50">
-              <iframe src={modal.url} className="w-full h-full border-none" title="Document Preview" />
+              <iframe src={modal.url} className="w-full h-full border-none" title={t.documentPreview} />
             </div>
           </div>
         </div>

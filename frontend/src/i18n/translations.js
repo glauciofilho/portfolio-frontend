@@ -61,6 +61,11 @@ export const translations = {
     readyforinspection: "Pronto para Inspeção",
     navigation: "Navegação",
     explorer: "Explorador",
+    rendering: "Renderizando...",
+    closeMenu: "Fechar Menu",
+    openMenu: "Abrir Menu",
+    close: "Fechar",
+    documentPreview: "Visualização do Documento",
 
     // RESUME
     resumeRole:
@@ -297,6 +302,11 @@ export const translations = {
     switchproject: "Switch Project",
     navigation: "Navigation",
     explorer: "Explorer",
+    rendering: "Rendering...",
+    closeMenu: "Close Menu",
+    openMenu: "Open Menu",
+    close: "Close",
+    documentPreview: "Document Preview",
 
     // RESUME
     resumeRole:

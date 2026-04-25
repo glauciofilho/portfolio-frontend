@@ -1,65 +1,41 @@
-const API_BASE = import.meta.env.VITE_API_URL;
+import { apiClient } from "./apiClient";
 
-export async function getProjects(lang = "en") {
-  const res = await fetch(`${API_BASE}/api/projects/?lang=${lang}`);
-  if (!res.ok) throw new Error("Error");
-  return res.json();
+export async function getProjects(lang = "en", signal) {
+  return apiClient(`/api/projects/?lang=${lang}`, { signal });
 }
 
-export async function getOneProject(numberProject, lang = "en") {
-  const res = await fetch(`${API_BASE}/api/projects/${numberProject}/?lang=${lang}`);
-  if (!res.ok) throw new Error("Error");
-  return res.json();
+export async function getOneProject(numberProject, lang = "en", signal) {
+  return apiClient(`/api/projects/${numberProject}/?lang=${lang}`, { signal });
 }
 
-export async function getFile(numberProject, numberFile, lang = "en") {
-  const res = await fetch(`${API_BASE}/api/files/${numberProject}/${numberFile}/?lang=${lang}`);
-  if (!res.ok) throw new Error("Error");
-  return res.json();
+export async function getFile(numberProject, numberFile, lang = "en", signal) {
+  return apiClient(`/api/files/${numberProject}/${numberFile}/?lang=${lang}`, { signal });
 }
 
-export async function getResume(lang = "en") {
-  const res = await fetch(`${API_BASE}/api/resume/?lang=${lang}`);
-  if (!res.ok) throw new Error("Error");
-  return res.json();
+export async function getResume(lang = "en", signal) {
+  return apiClient(`/api/resume/?lang=${lang}`, { signal });
 }
 
-export async function getAnalytics( lang = "en") {
-  const res = await fetch(`${API_BASE}/api/analytics/?lang=${lang}`);
-  if (!res.ok) throw new Error("Error");
-  return res.json();
+export async function getAnalytics(lang = "en", signal) {
+  return apiClient(`/api/analytics/?lang=${lang}`, { signal });
 }
 
-export async function getAnalyticsOverview() {
-  const res = await fetch(`${API_BASE}/analytics/overview/`);
-  if (!res.ok) throw new Error("Error");
-  return res.json();
+export async function getAnalyticsOverview(signal) {
+  return apiClient(`/analytics/overview/`, { signal });
 }
 
-export async function getAnalyticsCountries() {
-  const res = await fetch(`${API_BASE}/analytics/countries/`);
-  if (!res.ok) throw new Error("Error");
-  return res.json();
+export async function getAnalyticsCountries(signal) {
+  return apiClient(`/analytics/countries/`, { signal });
 }
 
-export async function getAnalyticsProjects() {
-  const res = await fetch(`${API_BASE}/analytics/projects/`);
-  if (!res.ok) throw new Error("Error");
-  return res.json();
+export async function getAnalyticsProjects(signal) {
+  return apiClient(`/analytics/projects/`, { signal });
 }
 
-export async function sendContactMessage(data) {
-  const res = await fetch(`${API_BASE}/contact/form/`, {
+export async function sendContactMessage(data, signal) {
+  return apiClient(`/contact/form/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(data),
+    signal,
   });
-
-  if (!res.ok) {
-    throw new Error("Failed to send message");
-  }
-
-  return res.json();
 }

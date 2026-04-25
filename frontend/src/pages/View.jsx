@@ -1,134 +1,40 @@
-import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { 
   X, 
-  ChevronRight, 
-  ChevronLeft, 
   Terminal, 
   RefreshCw, 
   FileCode, 
-  Globe, 
   Home,
   LayoutGrid,
   Mail,
   Menu
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
-import { getOneProject, getFile, getProjects } from "../services/api";
 import FileTree from "../components/FileTree";
 import LanguageSwitch from "../components/LanguageSwitch";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import { slugify } from "../utils/slugify";
+import { useProjectViewer } from "../hooks/useProjectViewer";
 
 export default function View() {
   const { lang, setLang, t } = useLanguage();
   const { projectSlug } = useParams();
   const navigate = useNavigate();
   
-  const [allProjects, setAllProjects] = useState([]);
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [activeFile, setActiveFile] = useState(null);
-  const [fileContent, setFileContent] = useState(null);
-  const [currentProjectId, setCurrentProjectId] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  useEffect(() => {
-    async function fetchAll() {
-      try {
-        const projects = await getProjects(lang);
-        const sorted = projects.sort((a, b) => a.name.localeCompare(b.name));
-        setAllProjects(sorted);
-        
-        const match = sorted.find(p => slugify(p.name) === projectSlug);
-        if (match) {
-          setCurrentProjectId(match.id);
-        }
-      } catch (err) {
-        console.error("Erro ao carregar lista de projetos", err);
-      }
-    }
-    fetchAll();
-  }, [lang, projectSlug]);
-
-  useEffect(() => {
-    if (!currentProjectId) return;
-    const controller = new AbortController();
-
-    async function load() {
-      try {
-        setLoading(true);
-        const result = await getOneProject(currentProjectId, lang, controller.signal);
-        setData(result);
-        setActiveFile(null);
-        setFileContent(null);
-
-        const readmeFile = result.files.find(f =>
-          f.path.toLowerCase() === "readme.md" || f.path.toLowerCase() === "readme"
-        );
-
-        if (readmeFile) {
-          const fileNode = { id: readmeFile.id, name: readmeFile.path, type: "file" };
-          setActiveFile(fileNode);
-          const res = await getFile(currentProjectId, readmeFile.id, lang);
-          setFileContent(res.content);
-        }
-
-      } catch (err) {
-        if (err.name !== "AbortError") console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    load();
-    return () => controller.abort();
-  }, [currentProjectId, lang]);
-
-  const fileTree = useMemo(() => {
-    if (!data?.files) return [];
-    const root = [];
-    data.files.forEach(file => {
-      const parts = file.path.split("/");
-      let current = root;
-      parts.forEach((part, idx) => {
-        const isFile = idx === parts.length - 1;
-        let existing = current.find(n => n.name === part);
-        if (!existing) {
-          existing = {
-            id: isFile ? file.id : `folder-${part}`,
-            name: part,
-            type: isFile ? "file" : "folder",
-            children: isFile ? null : []
-          };
-          current.push(existing);
-        }
-        if (!isFile) current = existing.children;
-      });
-    });
-
-    const sortNodes = (nodes) => {
-      nodes.sort((a, b) => {
-        if (a.type === "folder" && b.type === "file") return -1;
-        if (a.type === "file" && b.type === "folder") return 1;
-        return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
-      });
-      nodes.forEach(node => { if (node.children) sortNodes(node.children); });
-      return nodes;
-    };
-
-    return sortNodes(root);
-  }, [data]);
-
-  const handleProjectChange = (e) => {
-    const id = e.target.value;
-    const project = allProjects.find(p => p.id === parseInt(id));
-    if (project) {
-      navigate(`/${lang}/view/${slugify(project.name)}`);
-    }
-  };
+  const {
+    allProjects,
+    data,
+    loading,
+    activeFile,
+    fileContent,
+    currentProjectId,
+    isSidebarOpen,
+    setIsSidebarOpen,
+    fileTree,
+    handleProjectChange,
+    handleSelectFile
+  } = useProjectViewer(projectSlug, lang);
 
   return (
     <div className="h-screen w-full bg-[#001a28]/95 p-4 md:p-8 flex items-center justify-center overflow-hidden">
@@ -137,13 +43,13 @@ export default function View() {
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           className={`
-            absolute z-50 flex items-center justify-center text-cyan-400 hover:text-white transition-all duration-1000 ease-in-out
+            absolute z-50 flex items-center justify-center text-cyan-400 hover:text-white focus:outline-none focus:ring-0 outline-none transition-all duration-1000 ease-in-out
             ${isSidebarOpen 
               ? 'top-[14px] left-[240px] w-8 h-8 bg-transparent rounded-lg hover:bg-white/5' 
               : 'top-0 left-0 w-10 h-10 hover:bg-[#001a28] border-r border-white/5'
             }
           `}
-          title={isSidebarOpen ? "Close Menu" : "Open Menu"}
+          title={isSidebarOpen ? t.closeMenu : t.openMenu}
         >
           <div className="relative w-[16px] h-[12px] flex flex-col justify-between">
             <span className={`block w-full h-[2px] bg-current rounded transform transition-all duration-1000 ${isSidebarOpen ? 'translate-y-[5px] rotate-45' : ''}`} />
@@ -233,7 +139,7 @@ export default function View() {
             </div>
 
             {loading ? (
-              <div className="px-6 py-4 text-slate-500 text-xs animate-pulse">Loading...</div>
+              <div className="px-6 py-4 text-slate-500 text-xs animate-pulse">{t.vscodeLoading}</div>
             ) : (
               <div className="pl-2">
                 {fileTree.map(node => (
@@ -241,15 +147,7 @@ export default function View() {
                     key={node.id}
                     node={node}
                     activeFileId={activeFile?.id}
-                    onSelectFile={async fileNode => {
-                      setActiveFile(fileNode);
-                      setFileContent(null);
-                      if (window.innerWidth < 1024) setIsSidebarOpen(false);
-                      try {
-                        const res = await getFile(data.project.id, fileNode.id, lang);
-                        setFileContent(res.content);
-                      } catch (err) { console.error(err); }
-                    }}
+                    onSelectFile={handleSelectFile}
                   />
                 ))}
               </div>
@@ -281,7 +179,7 @@ export default function View() {
               <button 
                   onClick={() => navigate(`/${lang}/projects`)} 
                   className="text-slate-400 hover:text-white transition-colors p-1"
-                  title="Close"
+                  title={t.close}
               >
                   <X size={20} />
               </button>
@@ -303,7 +201,7 @@ export default function View() {
                 </div>
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-slate-500 font-mono text-xs">
-                  <RefreshCw className="animate-spin mr-2" size={14} /> Rendering...
+                  <RefreshCw className="animate-spin mr-2" size={14} /> {t.rendering}
                 </div>
               )
             ) : (

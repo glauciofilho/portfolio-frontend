@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { getProjects } from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
 import { trackEvent } from "../analytics/ga";
 import ProjectCard from "../components/ProjectCard";
@@ -9,82 +8,29 @@ import StackFilter from "../components/StackFilter";
 import SortSelect from "../components/SortSelect";
 import ViewToggle from "../components/ViewToggle";
 import { slugify } from "../utils/slugify";
+import { useProjects } from "../hooks/useProjects";
 
 export default function Projects() {
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
 
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [selectedStacks, setSelectedStacks] = useState([]);
-  const [sortBy, setSortBy] = useState("date_desc");
-  const [view, setView] = useState("grid");
+  const {
+    filteredProjects,
+    allStacks,
+    loading,
+    search,
+    setSearch,
+    selectedStacks,
+    setSelectedStacks,
+    sortBy,
+    setSortBy,
+    view,
+    setView
+  } = useProjects(lang);
 
   useEffect(() => {
     trackEvent("view_projects", {languageCode: lang});
-    const controller = new AbortController();
-
-    async function loadProjects() {
-      setLoading(true);
-      try {
-        const data = await getProjects(lang, controller.signal);
-        setProjects(data);
-      } catch (error) {
-        console.error("Failed to load projects", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadProjects();
-    return () => controller.abort();
   }, [lang]);
-
-  const allStacks = useMemo(() => {
-    const stacks = new Set();
-    projects.forEach(p =>
-      p.stacks.forEach(s => stacks.add(s.name))
-    );
-    return Array.from(stacks).sort();
-  }, [projects]);
-
-  const filteredProjects = useMemo(() => {
-    let result = [...projects];
-
-    if (search) {
-      result = result.filter(p =>
-        p.name.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    if (selectedStacks.length > 0) {
-      result = result.filter(p =>
-        p.stacks.some(s => selectedStacks.includes(s.name))
-      );
-    }
-
-    result.sort((a, b) => {
-      const dateA = new Date(a.created_at);
-      const dateB = new Date(b.created_at);
-      const nameA = a.name.toLowerCase();
-      const nameB = b.name.toLowerCase();
-
-      switch (sortBy) {
-        case "name_asc":
-          return nameA.localeCompare(nameB);
-        case "name_desc":
-          return nameB.localeCompare(nameA);
-        case "date_asc":
-          return dateA - dateB;
-        case "date_desc":
-        default:
-          return dateB - dateA;
-      }
-    });
-
-    return result;
-  }, [projects, search, selectedStacks, sortBy]);
 
   if (loading) {
     return (

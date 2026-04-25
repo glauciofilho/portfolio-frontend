@@ -107,10 +107,11 @@ Este portfólio é uma aplicação web moderna que apresenta:
 - **React Simple Maps 1.2.1** - Visualização de mapas geográficos
 - **Lucide React 0.562.0** - Ícones em SVG
 
-### Desenvolvimento
+### Desenvolvimento e Testes
 - **ESLint 9.39.1** - Linting de código
 - **PostCSS 8.5.6** - Transformações CSS
 - **Autoprefixer 10.4.23** - Prefixos CSS automáticos
+- **Vitest & React Testing Library** - Testes unitários de componentes e hooks
 - **TypeScript** - Em transição (ViewToggle.tsx)
 
 ### Infraestrutura
@@ -296,9 +297,16 @@ frontend/
 
 ## 🏗️ Arquitetura
 
+### Implementação de Clean Architecture
+
+A aplicação utiliza uma abordagem de Clean Architecture (Arquitetura Limpa) adaptada para React:
+- **Camada de Apresentação (Componentes/Páginas)**: Focada puramente em UI e layout, utilizando Tailwind CSS.
+- **Camada de Aplicação (Custom Hooks)**: Hooks como `useProjects`, `useProjectViewer` e `useFetch` lidam com toda a regra de negócio, algoritmos de filtro, ordenação e estado.
+- **Camada de Infraestrutura (Serviços)**: O cliente genérico `apiClient.js` abstrai o fetch nativo do navegador, tratamento de dados JSON e erros de HTTP.
+
 ### Fluxo de Dados
 
-```
+```text
 Browser
     ↓
 App.jsx (routing com React Router)
@@ -308,13 +316,13 @@ App.jsx (routing com React Router)
 │ AnalyticsProvider (Google Analytics 4)      │
 └─────────────────────────────────────────────┘
     ↓
-Pages (Home, Projects, Analytics, etc)
-    ├→ Components (Header, Footer, etc)
-    └→ useLanguage() & tracking
+Páginas (Foco em UI, ex: Projects.jsx)
+    ├→ Custom Hooks (Lógica & Estado, ex: useProjects)
+    └→ Componentes (ProjectCard, Header, etc)
          ↓
-    API Service (backend)
+    Serviços de API (Camada de Infraestrutura)
          ↓
-    Backend API (Django/FastAPI)
+    Backend API
 ```
 
 ### Contextos
