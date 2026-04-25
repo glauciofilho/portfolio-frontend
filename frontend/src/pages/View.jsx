@@ -148,7 +148,7 @@ export default function View() {
                       <ChevronLeft size={20} />
                   </button>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 gap-2 justify-center">
                   <Link 
                       to={`/${lang}`} 
                       className="flex items-center gap-2 p-2 bg-[#001a28] border border-white/5 rounded-lg text-cyan-300 hover:text-white transition-colors text-xs font-bold"
@@ -193,11 +193,19 @@ export default function View() {
             <select
               value={currentProjectId || ""}
               onChange={handleProjectChange}
-              className="w-full bg-[#001a28] text-white text-xs border border-white/10 rounded-lg p-2 outline-none"
+              className="w-full bg-[#001a28] text-white text-xs border border-white/10 rounded-lg p-2 pr-8 outline-none truncate appearance-none relative"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 0.5rem center',
+                backgroundSize: '1rem',
+              }}
             >
               <option value="" disabled>Select a project</option>
               {allProjects.map(p => (
-                <option key={p.id} value={p.id}>{p.name}</option>
+                <option key={p.id} value={p.id}>
+                  {p.name.length > 25 ? p.name.substring(0, 25) + "..." : p.name}
+                </option>
               ))}
             </select>
           </div>
